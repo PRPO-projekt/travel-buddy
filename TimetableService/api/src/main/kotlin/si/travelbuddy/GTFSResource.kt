@@ -1,48 +1,41 @@
 package si.travelbuddy
 
+import com.conveyal.gtfs.GTFSFeed
+import com.conveyal.gtfs.model.Stop
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.utils.io.*
+import kotlinx.io.readByteArray
 
-import org.onebusaway.csv_entities.EntityHandler
-import org.onebusaway.csv_entities.FileCsvInputSource
-import org.onebusaway.gtfs.model.Stop
-import org.onebusaway.gtfs.serialization.*
 import si.travelbuddy.dto.StopDto
+import java.util.zip.ZipFile
+import kotlin.io.path.absolutePathString
+import kotlin.io.path.inputStream
 import kotlin.io.path.writeBytes
 import kotlin.io.path.writer
 
-private class GtfsEntityHandler(private val service: StopService) : EntityHandler {
-    public override fun handleEntity(p0: Any) {
-        if (p0 is Stop) {
-            val stop = p0 as Stop;
-            val stopDto = StopDto(
-                stopId = stop.id.toString(),
-                code = stop.code,
-                name = stop.name,
-                desc = stop.desc,
-                lat = stop.lat,
-                lon = stop.lon
-            )
-
-            service.create(stopDto)
-        }
-    }
-}
-
 fun Route.gtfsImportRoute(service: StopService) {
     route("/gtfs") {
+        /* Upload GTFS feed as zip file */
         post("/import") {
-            val gtfsReader = GtfsReader()
+            val file = kotlin.io.path.createTempFile(prefix = "temp_import", suffix = ".zip")
+            call.application.environment.log.info("Writing zip file to ${file.absolutePathString()}")
 
-            val file = kotlin.io.path.createTempFile(prefix = "temp_import", suffix = ".zip");
-            file.writeBytes(call.receive<ByteArray>());
+            val channel = call.receiveChannel()
+            val bytes = channel.readRemaining().readByteArray()
+            file.writeBytes(bytes)
 
-            val entityHandler = GtfsEntityHandler(service);
-            gtfsReader.addEntityHandler(entityHandler);
-
-            gtfsReader.run(FileCsvInputSource(file.toFile()));
+            val feed: GTFSFeed = GTFSFeed.fromFile(file.absolutePathString())
+            for (stop in feed.stops.values) {
+                service.create(StopDto(
+                    stopId = stop.stop_id,
+                    name = stop.stop_name,
+                    lat = stop.stop_lat,
+                    lon = stop.stop_lon
+                ))
+            }
         }
     }
 }

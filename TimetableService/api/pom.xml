@@ -93,6 +93,11 @@
             <version>${ktor_version}</version>
         </dependency>
         <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-resources-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback_version}</version>
@@ -126,9 +131,9 @@
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.onebusaway</groupId>
-            <artifactId>onebusaway-gtfs</artifactId>
-            <version>3.2.4</version>
+            <groupId>com.conveyal</groupId>
+            <artifactId>gtfs-lib</artifactId>
+            <version>6.2.0</version>
         </dependency>
         <dependency>
             <groupId>io.swagger.codegen.v3</groupId>
@@ -156,30 +161,6 @@
         </resources>
 
         <plugins>
-            <plugin>
-                <artifactId>kotlin-maven-plugin</artifactId>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <version>${kotlin.version}</version>
-                <configuration>
-                    <jvmTarget>1.8</jvmTarget>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>test-compile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>test-compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>

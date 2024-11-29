@@ -1,117 +1,15 @@
 openapi: "3.1.0"
 info:
-  title: "TimetableService API"
-  description: "TimetableService API"
+  title: "travel_buddy API"
+  description: "travel_buddy API"
   version: "1.0.0"
 servers:
-- url: "https://TimetableService"
+- url: "https://travel_buddy"
 paths:
   /gtfs/import:
     post:
-      description: ""
-  /users:
-    post:
-      description: "Create user"
-      requestBody:
-        content:
-          application/xml:
-            schema:
-              $ref: "#/components/schemas/ExposedUser"
-        required: true
-      responses:
-        "201":
-          description: "Created"
-          content:
-            '*/*':
-              schema:
-                type: "integer"
-                format: "int32"
-  /users/{id}:
-    delete:
-      description: "Delete user"
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        schema:
-          type: "integer"
-      responses:
-        "500":
-          description: "Internal Server Error"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: ""
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                type: "object"
-    get:
-      description: "Read user"
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        schema:
-          type: "integer"
-      responses:
-        "500":
-          description: "Internal Server Error"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: ""
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ExposedUser"
-        "404":
-          description: "Not Found"
-          content:
-            '*/*':
-              schema:
-                type: "object"
-    put:
-      description: "Update user"
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        schema:
-          type: "integer"
-      requestBody:
-        content:
-          application/xml:
-            schema:
-              $ref: "#/components/schemas/ExposedUser"
-        required: true
-      responses:
-        "500":
-          description: "Internal Server Error"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: ""
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                type: "object"
-  /json/kotlinx-serialization:
+      description: "Upload GTFS feed as zip file"
+  /stops:
     get:
       description: ""
       responses:
@@ -120,7 +18,27 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/Map_String"
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Stop"
+  /stops/{id}:
+    get:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Stop"
   /:
     get:
       description: ""
@@ -147,17 +65,33 @@ paths:
               examples:
                 Example#1:
                   value: "<script src='/webjars/jquery/jquery.js'></script>"
+  /json/kotlinx-serialization:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Map_String"
 components:
   schemas:
-    ExposedUser:
+    Stop:
       type: "object"
       properties:
+        id:
+          type: "string"
         name:
           type: "string"
-        age:
-          type: "integer"
-          format: "int32"
+        lat:
+          type: "number"
+          format: "double"
+        lon:
+          type: "number"
+          format: "double"
       required:
+      - "id"
       - "name"
     Map:
       type: "object"

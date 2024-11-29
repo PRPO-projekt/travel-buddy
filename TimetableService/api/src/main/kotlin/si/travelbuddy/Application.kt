@@ -3,6 +3,7 @@ package si.travelbuddy
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import io.ktor.server.resources.*
 import si.travelbuddy.plugins.*
 
 fun main() {
@@ -11,6 +12,8 @@ fun main() {
 }
 
 fun Application.module() {
+    install(Resources)
+
     configureHTTP()
     configureSerialization()
     configureDatabases()
