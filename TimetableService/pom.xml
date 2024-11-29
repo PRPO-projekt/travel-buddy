@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>si.travelbuddy</groupId>
+    <artifactId>ktor-example</artifactId>
+    <version>0.0.1</version>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>api</module>
+        <module>entity</module>
+        <module>service</module>
+    </modules>
+    <properties>
+        <ktor_version>3.0.0</ktor_version>
+        <kotlin.code.style>official</kotlin.code.style>
+        <kotlin_version>2.0.21</kotlin_version>
+        <logback_version>1.4.14</logback_version>
+        <slf4j_version>2.0.9</slf4j_version>
+        <swagger_codegen_version>1.0.36</swagger_codegen_version>
+        <exposed_version>0.53.0</exposed_version>
+
+        <h2_version>2.2.224</h2_version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+        <main.class>si.travelbuddy.ApplicationKt</main.class>
+        <kotlin.version>2.0.21</kotlin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>si.travelbuddy</groupId>
+                <artifactId>api</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>si.travelbuddy</groupId>
+                <artifactId>entity</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>si.travelbuddy</groupId>
+                <artifactId>service</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
