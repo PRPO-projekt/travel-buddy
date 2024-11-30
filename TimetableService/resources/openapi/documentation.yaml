@@ -4,7 +4,7 @@ info:
   description: "travel_buddy API"
   version: "1.0.0"
 servers:
-- url: "https://travel_buddy"
+- url: "http://0.0.0.0:8080"
 paths:
   /gtfs/import:
     post:
