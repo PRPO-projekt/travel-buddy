@@ -1,5 +1,6 @@
 package si.travelbuddy.entity
 
+import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -16,6 +17,7 @@ object RouteTable : IdTable<String>() {
     override val primaryKey: Table.PrimaryKey = PrimaryKey(id)
 }
 
+@Serializable
 data class Route(
     val id: String,
     val shortName: String? = null,
