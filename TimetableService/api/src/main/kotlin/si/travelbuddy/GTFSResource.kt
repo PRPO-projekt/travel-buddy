@@ -1,24 +1,32 @@
 package si.travelbuddy
 
 import com.conveyal.gtfs.GTFSFeed
-import com.conveyal.gtfs.model.Stop
-import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.utils.io.*
 import kotlinx.io.readByteArray
+import org.jetbrains.exposed.exceptions.ExposedSQLException
+import si.travelbuddy.dto.RouteDto
 
 import si.travelbuddy.dto.StopDto
-import java.util.zip.ZipFile
+import si.travelbuddy.dto.StopTimeDto
+import si.travelbuddy.dto.TripDto
+import si.travelbuddy.entity.RouteDAO
 import kotlin.io.path.absolutePathString
-import kotlin.io.path.inputStream
 import kotlin.io.path.writeBytes
-import kotlin.io.path.writer
 
-fun Route.gtfsImportRoute(service: StopService) {
+fun Route.gtfsImportRoute(
+    stopService: StopService,
+    routeService: RouteService,
+    tripService: TripService,
+    stopTimeService: StopTimeService
+) {
     route("/gtfs") {
-        /* Upload GTFS feed as zip file */
+        /*
+        Upload GTFS feed as ZIP file
+
+        Example curl command: `curl -X POST http://localhost:8080/gtfs/import --data-binary @/home/nikola/Downloads/b2b.gtfs.zip`
+         */
         post("/import") {
             val file = kotlin.io.path.createTempFile(prefix = "temp_import", suffix = ".zip")
             call.application.environment.log.info("Writing zip file to ${file.absolutePathString()}")
@@ -29,12 +37,39 @@ fun Route.gtfsImportRoute(service: StopService) {
 
             val feed: GTFSFeed = GTFSFeed.fromFile(file.absolutePathString())
             for (stop in feed.stops.values) {
-                service.create(StopDto(
-                    stopId = stop.stop_id,
+                stopService.create(StopDto(
+                    id = stop.stop_id,
                     name = stop.stop_name,
                     lat = stop.stop_lat,
                     lon = stop.stop_lon
                 ))
+            }
+
+            for (route in feed.routes.values) {
+                routeService.create(RouteDto(route.route_id))
+            }
+
+            for (trip in feed.trips.values) {
+                tripService.create(TripDto(
+                    trip.trip_id, trip.route_id
+                ))
+            }
+
+            for (stopTime in feed.stop_times.values) {
+                try {
+                    stopTimeService.create(StopTimeDto(
+                        stopTime.trip_id,
+                        stopTime.arrival_time,
+                        stopTime.departure_time,
+                        stopTime.stop_id
+                    ))
+                }
+                catch (e: NullPointerException) {
+                    continue
+                }
+                catch (e: ExposedSQLException) {
+                    continue
+                }
             }
         }
     }

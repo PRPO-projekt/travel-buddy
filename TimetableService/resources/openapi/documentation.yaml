@@ -4,14 +4,21 @@ info:
   description: "travel_buddy API"
   version: "1.0.0"
 servers:
-- url: "https://travel_buddy"
+- url: "http://0.0.0.0:8080"
 paths:
   /gtfs/import:
     post:
-      description: "Upload GTFS feed as zip file"
+      description: "Upload GTFS feed as ZIP file\n\n        Example curl command:\
+        \ `curl -X POST http://localhost:8080/gtfs/import --data-binary @/home/nikola/Downloads/b2b.gtfs.zip`"
   /stops:
     get:
       description: ""
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
@@ -22,9 +29,27 @@ paths:
                 items:
                   $ref: "#/components/schemas/Stop"
   /stops/{id}:
+    delete:
+      description: ""
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
     get:
       description: ""
       parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
       - name: "id"
         in: "path"
         required: true
@@ -39,6 +64,45 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Stop"
+    put:
+      description: ""
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StopDto"
+        required: true
+  /stops/{id}/departures:
+    get:
+      description: ""
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema: {}
   /:
     get:
       description: ""
@@ -78,6 +142,22 @@ paths:
 components:
   schemas:
     Stop:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        name:
+          type: "string"
+        lat:
+          type: "number"
+          format: "double"
+        lon:
+          type: "number"
+          format: "double"
+      required:
+      - "id"
+      - "name"
+    StopDto:
       type: "object"
       properties:
         id:

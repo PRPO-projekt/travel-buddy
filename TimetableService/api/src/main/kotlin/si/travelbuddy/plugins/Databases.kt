@@ -3,9 +3,7 @@ package si.travelbuddy.plugins
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.*
-import si.travelbuddy.gtfsImportRoute
-import si.travelbuddy.StopService
-import si.travelbuddy.stopsRoute
+import si.travelbuddy.*
 
 fun Application.configureDatabases() {
     val database = Database.connect(
@@ -16,9 +14,12 @@ fun Application.configureDatabases() {
     )
 
     val stopService = StopService(database)
+    val routeService = RouteService(database)
+    val tripService = TripService(database)
+    val stopTimeService = StopTimeService(database)
 
     routing {
-        stopsRoute()
-        gtfsImportRoute(stopService)
+        stopsRoute(stopService)
+        gtfsImportRoute(stopService, routeService, tripService, stopTimeService)
     }
 }

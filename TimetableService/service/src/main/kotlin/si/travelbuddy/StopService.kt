@@ -2,6 +2,7 @@ package si.travelbuddy
 
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import si.travelbuddy.dto.StopDto
@@ -15,15 +16,26 @@ class StopService(private val database: Database) {
         }
     }
 
-    suspend fun <T> dbQuery(block: suspend () -> T): T =
+    private suspend fun <T> dbQuery(block: suspend () -> T): T =
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
-    fun create(stop: StopDto): Int = transaction {
-        StopDAO.new {
-            stopId = stop.stopId
+    fun create(stop: StopDto): String = transaction {
+        StopDAO.new(stop.id) {
             name = stop.name
             lat = stop.lat
             lon = stop.lon
         }.id.value
+    }
+
+    suspend fun update(stop: StopDto) = dbQuery {
+        StopDAO.findByIdAndUpdate(stop.id) { it ->
+            it.name = stop.name
+            it.lat = stop.lat
+            it.lon = stop.lon
+        }
+    }
+
+    suspend fun delete(id: String) = dbQuery {
+        StopTable.deleteWhere { StopTable.id eq id }
     }
 }
