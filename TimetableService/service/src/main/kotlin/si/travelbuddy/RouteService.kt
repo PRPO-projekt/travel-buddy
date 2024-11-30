@@ -23,6 +23,8 @@ class RouteService(private val database: Database) {
 
     fun create(route: RouteDto) = transaction {
         RouteDAO.new(route.id) {
+            routeShortName = route.shortName
+            routeLongName = route.longName
         }
     }
 }

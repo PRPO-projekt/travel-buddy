@@ -46,7 +46,7 @@ fun Route.gtfsImportRoute(
             }
 
             for (route in feed.routes.values) {
-                routeService.create(RouteDto(route.route_id))
+                routeService.create(RouteDto(route.route_id, route.route_short_name, route.route_long_name))
             }
 
             for (trip in feed.trips.values) {

@@ -42,12 +42,11 @@ class StopTimeService(private val database: Database) {
 
         }
 
-        StopTimeDAO.new(CompositeID {
-            it[StopTimeTable.stopId] = stop.id
-            it[StopTimeTable.tripId] = trip.id
-        }) {
+        StopTimeDAO.new {
             arrivalTime = arrTime
             departureTime = depTime
+            tripId = trip
+            stopId = stop
         }
     }
 }

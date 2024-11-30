@@ -136,6 +136,11 @@
             <version>6.2.0</version>
         </dependency>
         <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>12.6.3.jre11</version>
+        </dependency>
+        <dependency>
             <groupId>io.swagger.codegen.v3</groupId>
             <artifactId>swagger-codegen-generators</artifactId>
             <version>${swagger_codegen_version}</version>
