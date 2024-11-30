@@ -6,12 +6,15 @@ import io.ktor.server.request.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.put
 import kotlinx.serialization.Serializable
+import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.transactions.transaction
 import si.travelbuddy.dto.StopDto
 import si.travelbuddy.entity.*
+import java.time.LocalTime
 
 @Resource("/stops")
 class StopsResource(val name: String = ".*") {
@@ -43,9 +46,9 @@ fun Route.stopsRoute(service: StopService) {
     }
 
     @Serializable
-    data class Departures(
-        val stop: Stop,
-        val departures: List<StopTime>
+    data class Departure(
+        val depTime: String,
+        val routeName: String? = null,
     )
 
     get<StopsResource.Id.Departures> { dep ->
@@ -54,8 +57,22 @@ fun Route.stopsRoute(service: StopService) {
             if (stop == null) {
                 "Could not find stop with id ${dep.parent.id}"
             }
+            else {
+                val res = mutableListOf<Departure>()
 
-            Departures(stop!!.toModel(), StopTimeDAO.find { StopTimeTable.stopId eq dep.parent.id }.map { dao -> dao.toModel() })
+                val stopTimes = StopTimeDAO.find { StopTimeTable.stopId eq stop.id }.toList()
+
+                for (stopTime in stopTimes) {
+                    val trip = TripDAO.findById(stopTime.id.value[StopTimeTable.tripId].toString())
+                    val route = trip?.routeId
+
+                    if (route != null) {
+                        res.add(Departure(stopTime.departureTime.toString(), route.routeLongName))
+                    }
+                }
+
+                res
+            }
         })
     }
 }

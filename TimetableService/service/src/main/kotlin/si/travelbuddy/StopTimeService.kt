@@ -2,18 +2,15 @@ package si.travelbuddy
 
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.dao.id.CompositeID
+import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.javatime.timeParam
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import si.travelbuddy.dto.StopTimeDto
 import si.travelbuddy.entity.*
 import java.time.DateTimeException
 import java.time.LocalTime
-import java.time.format.DateTimeParseException
-import java.util.*
 
 class StopTimeService(private val database: Database) {
     init {
@@ -45,11 +42,12 @@ class StopTimeService(private val database: Database) {
 
         }
 
-        StopTimeDAO.new {
-            stopId = stop
+        StopTimeDAO.new(CompositeID {
+            it[StopTimeTable.stopId] = stop.id
+            it[StopTimeTable.tripId] = trip.id
+        }) {
             arrivalTime = arrTime
             departureTime = depTime
-            tripId = trip
         }
     }
 }

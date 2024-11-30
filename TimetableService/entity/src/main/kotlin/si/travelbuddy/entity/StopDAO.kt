@@ -33,5 +33,7 @@ class StopDAO(id: EntityID<String>) : Entity<String>(id) {
     var lat by StopTable.lat
     var lon by StopTable.lon
 
+    var trips by TripDAO via StopTimeTable
+
     fun toModel(): Stop = Stop(id.value, name, lat, lon)
 }

@@ -7,23 +7,19 @@ import org.jetbrains.exposed.dao.CompositeEntityClass
 import org.jetbrains.exposed.dao.id.CompositeID
 import org.jetbrains.exposed.dao.id.CompositeIdTable
 import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.javatime.time
 import java.time.LocalDateTime
 import java.time.LocalTime
 
 object StopTimeTable : CompositeIdTable("stop_time") {
-    val tripId = reference("trip_id", TripTable.id)
+    val tripId = reference("trip_id", TripTable)
 
     val arrivalTime = time("arrival_time")
     val departureTime = time("departure_time")
 
-    val stopId = reference("stop_id", StopTable.id)
-
-    init {
-        addIdColumn(tripId)
-        addIdColumn(stopId)
-    }
+    val stopId = reference("stop_id", StopTable)
 
     override val primaryKey = PrimaryKey(tripId, stopId)
 }
@@ -38,9 +34,6 @@ data class StopTime(
 
 class StopTimeDAO(id: EntityID<CompositeID>) : CompositeEntity(id) {
     companion object : CompositeEntityClass<StopTimeDAO>(StopTimeTable)
-
-    var tripId by TripDAO referencedOn StopTimeTable.tripId
-    var stopId by StopDAO referencedOn StopTimeTable.stopId
 
     var arrivalTime by StopTimeTable.arrivalTime
     var departureTime by StopTimeTable.departureTime

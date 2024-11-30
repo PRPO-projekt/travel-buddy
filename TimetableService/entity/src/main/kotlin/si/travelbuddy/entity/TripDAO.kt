@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.Table
 object TripTable : IdTable<String>() {
     override val id: Column<EntityID<String>> = varchar("trip_id", 32).entityId()
 
-    val routeId = reference("route_id", RouteTable.id)
+    val routeId = reference("route_id", RouteTable)
     val tripHeadsign = varchar("trip_headsign", 32).nullable()
     val blockId = integer("block_id").nullable()
 
@@ -31,5 +31,5 @@ class TripDAO(id: EntityID<String>) : Entity<String>(id) {
     var tripHeadsign by TripTable.tripHeadsign
     var blockId by TripTable.blockId
 
-    fun toModel() = Trip(id.value, routeId.toString(), tripHeadsign, blockId)
+    fun toModel() = Trip(id.value, "", tripHeadsign, blockId)
 }
