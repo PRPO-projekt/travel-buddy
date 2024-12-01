@@ -24,14 +24,14 @@ data class StopTime(
     val departureTime: String,
 )
 
-class StopTimeDAO(id: EntityID<UUID>) : UUIDEntity(id) {
-    companion object : UUIDEntityClass<StopTimeDAO>(StopTimeTable)
+class StopTimeDao(id: EntityID<UUID>) : UUIDEntity(id) {
+    companion object : UUIDEntityClass<StopTimeDao>(StopTimeTable)
 
     var arrivalTime by StopTimeTable.arrivalTime
     var departureTime by StopTimeTable.departureTime
 
-    var tripId by TripDAO referencedOn StopTimeTable.tripId
-    var stopId by StopDAO referencedOn StopTimeTable.stopId
+    var tripId by TripDao referencedOn StopTimeTable.tripId
+    var stopId by StopDao referencedOn StopTimeTable.stopId
 
     fun toModel(): StopTime = StopTime(
         "", "", arrivalTime.toString(), departureTime.toString()

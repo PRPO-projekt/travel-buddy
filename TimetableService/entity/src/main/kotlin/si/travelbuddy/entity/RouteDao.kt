@@ -24,8 +24,8 @@ data class Route(
     val longName: String? = null,
 )
 
-class RouteDAO(id: EntityID<String>) : Entity<String>(id) {
-    companion object : EntityClass<String, RouteDAO>(RouteTable)
+class RouteDao(id: EntityID<String>) : Entity<String>(id) {
+    companion object : EntityClass<String, RouteDao>(RouteTable)
 
     var routeShortName by RouteTable.routeShortName
     var routeLongName by RouteTable.routeLongName

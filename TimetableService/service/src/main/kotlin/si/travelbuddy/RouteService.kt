@@ -7,9 +7,8 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import org.jetbrains.exposed.sql.transactions.transaction
 import si.travelbuddy.dto.RouteDto
 
-import si.travelbuddy.entity.RouteDAO
+import si.travelbuddy.entity.RouteDao
 import si.travelbuddy.entity.RouteTable
-import si.travelbuddy.entity.StopTable
 
 class RouteService(private val database: Database) {
     init {
@@ -22,7 +21,7 @@ class RouteService(private val database: Database) {
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
     fun create(route: RouteDto) = transaction {
-        RouteDAO.new(route.id) {
+        RouteDao.new(route.id) {
             routeShortName = route.shortName
             routeLongName = route.longName
         }

@@ -11,7 +11,6 @@ import si.travelbuddy.dto.RouteDto
 import si.travelbuddy.dto.StopDto
 import si.travelbuddy.dto.StopTimeDto
 import si.travelbuddy.dto.TripDto
-import si.travelbuddy.entity.RouteDAO
 import kotlin.io.path.absolutePathString
 import kotlin.io.path.writeBytes
 

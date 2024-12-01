@@ -6,7 +6,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import si.travelbuddy.dto.StopDto
-import si.travelbuddy.entity.StopDAO
+import si.travelbuddy.entity.StopDao
 import si.travelbuddy.entity.StopTable
 
 class StopService(private val database: Database) {
@@ -20,15 +20,15 @@ class StopService(private val database: Database) {
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
     fun create(stop: StopDto): String = transaction {
-        StopDAO.new(stop.id) {
+        StopDao.new(stop.id) {
             name = stop.name
             lat = stop.lat
             lon = stop.lon
         }.id.value
     }
 
-    suspend fun update(stop: StopDto) = dbQuery {
-        StopDAO.findByIdAndUpdate(stop.id) { it ->
+    suspend fun update(id: String, stop: StopDto) = dbQuery {
+        StopDao.findByIdAndUpdate(id) { it ->
             it.name = stop.name
             it.lat = stop.lat
             it.lon = stop.lon

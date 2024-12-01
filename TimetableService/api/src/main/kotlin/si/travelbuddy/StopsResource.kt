@@ -3,12 +3,10 @@ package si.travelbuddy
 import io.ktor.http.*
 import io.ktor.resources.*
 import io.ktor.server.request.*
-import io.ktor.server.resources.*
 import io.ktor.server.resources.delete
 import io.ktor.server.resources.get
 import io.ktor.server.resources.put
 import io.ktor.server.response.*
-import io.ktor.server.routing.*
 import io.ktor.server.routing.Route
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -27,15 +25,15 @@ class StopsResource(val name: String = ".*") {
     }
 }
 
-fun Route.stopsRoute(service: StopService) {
+fun Route.stops(service: StopService) {
     get<StopsResource> { stop ->
         call.respond(transaction {
-            StopDAO.all().toList()
+            StopDao.all().toList()
         }.map { dao -> dao.toModel() }.filter { s -> Regex(stop.name).matches(s.name) })
     }
 
     get<StopsResource.Id> { stopId ->
-        val stop = transaction { StopDAO.findById(stopId.id) }
+        val stop = transaction { StopDao.findById(stopId.id) }
 
         if (stop == null) {
             call.respond(HttpStatusCode.NotFound)
@@ -46,8 +44,9 @@ fun Route.stopsRoute(service: StopService) {
     }
     put<StopsResource.Id> { stop ->
         val stopDto = call.receive<StopDto>();
-        service.update(stopDto)
+        service.update(stop.id, stopDto)
     }
+
     delete<StopsResource.Id> { stop ->
         service.delete(stop.id)
     }
@@ -55,6 +54,7 @@ fun Route.stopsRoute(service: StopService) {
     @Serializable
     data class Departure(
         val depTime: String,
+        val trip: Trip,
         val route: si.travelbuddy.entity.Route,
     )
 
@@ -68,7 +68,7 @@ fun Route.stopsRoute(service: StopService) {
         call.respond(transaction {
             val res = mutableListOf<Departure>()
 
-            val stopTimes = StopTimeDAO.find { StopTimeTable.stopId eq dep.parent.id }.toList()
+            val stopTimes = StopTimeDao.find { StopTimeTable.stopId eq dep.parent.id }.toList()
 
             for (stopTime in stopTimes.filter {
                 it.departureTime > LocalTime.ofSecondOfDay(dep.from) && it.departureTime < LocalTime.ofSecondOfDay(dep.until)
@@ -76,12 +76,12 @@ fun Route.stopsRoute(service: StopService) {
                 val trip = stopTime.tripId
                 val route = trip.routeId
 
-                res.add(Departure(stopTime.departureTime.toString(), route.toModel()))
+                res.add(Departure(stopTime.departureTime.toString(), trip.toModel(), route.toModel()))
             }
 
             res.sortBy { it.depTime }
 
-            Departures(StopDAO.findById(dep.parent.id)?.toModel(), res.toList())
+            Departures(StopDao.findById(dep.parent.id)?.toModel(), res.toList())
         })
     }
 }

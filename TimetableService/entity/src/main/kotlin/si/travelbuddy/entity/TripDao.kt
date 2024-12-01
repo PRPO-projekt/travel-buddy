@@ -26,12 +26,12 @@ data class Trip(
     val blockId: Int?
 )
 
-class TripDAO(id: EntityID<String>) : Entity<String>(id) {
-    companion object : EntityClass<String, TripDAO>(TripTable)
+class TripDao(id: EntityID<String>) : Entity<String>(id) {
+    companion object : EntityClass<String, TripDao>(TripTable)
 
-    var routeId by RouteDAO referencedOn TripTable.routeId
+    var routeId by RouteDao referencedOn TripTable.routeId
     var tripHeadsign by TripTable.tripHeadsign
     var blockId by TripTable.blockId
 
-    fun toModel(): Trip = Trip(id.value, "", tripHeadsign, blockId)
+    fun toModel(): Trip = Trip(id.value, routeId.id.toString(), tripHeadsign, blockId)
 }

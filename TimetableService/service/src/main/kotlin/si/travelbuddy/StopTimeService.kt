@@ -1,8 +1,6 @@
 package si.travelbuddy
 
 import kotlinx.coroutines.Dispatchers
-import org.jetbrains.exposed.dao.id.CompositeID
-import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
@@ -23,8 +21,8 @@ class StopTimeService(private val database: Database) {
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
     fun create(stopTime: StopTimeDto) = transaction {
-        val stop = StopDAO.findById(stopTime.stopId!!)!!
-        val trip = TripDAO.findById(stopTime.tripId!!)!!
+        val stop = StopDao.findById(stopTime.stopId!!)!!
+        val trip = TripDao.findById(stopTime.tripId!!)!!
 
         var arrTime = LocalTime.MAX
         try {
@@ -42,7 +40,7 @@ class StopTimeService(private val database: Database) {
 
         }
 
-        StopTimeDAO.new {
+        StopTimeDao.new {
             arrivalTime = arrTime
             departureTime = depTime
             tripId = trip

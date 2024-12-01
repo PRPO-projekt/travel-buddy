@@ -2,13 +2,17 @@ package si.travelbuddy
 
 import io.ktor.http.*
 import io.ktor.resources.*
+import io.ktor.server.request.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.resources.put
+
 import org.jetbrains.exposed.sql.transactions.transaction
-import si.travelbuddy.entity.StopTimeDAO
+import si.travelbuddy.dto.TripDto
+import si.travelbuddy.entity.StopTimeDao
 import si.travelbuddy.entity.StopTimeTable
-import si.travelbuddy.entity.TripDAO
+import si.travelbuddy.entity.TripDao
 
 @Resource("/trips")
 class TripsResource {
@@ -19,14 +23,15 @@ class TripsResource {
     }
 }
 
-fun Route.tripRoute() {
+fun Route.trips(service: TripService) {
     get<TripsResource> { trip ->
         call.respond(transaction {
-            TripDAO.all().toList()
+            TripDao.all().toList()
         }.map { dao -> dao.toModel() })
     }
+
     get<TripsResource.Id> { tripId ->
-        val trip = transaction { TripDAO.findById(tripId.id) }
+        val trip = transaction { TripDao.findById(tripId.id) }
 
         if (trip == null) {
             call.respond(HttpStatusCode.NotFound)
@@ -35,15 +40,25 @@ fun Route.tripRoute() {
             call.respond(HttpStatusCode.OK, trip.toModel())
         }
     }
+
+    delete<TripsResource.Id> { tripId ->
+        service.delete(tripId.id)
+    }
+
+    put<TripsResource.Id> { tripId ->
+        val trip = call.receive<TripDto>()
+        service.update(tripId.id, trip)
+    }
+
     get<TripsResource.Id.Stops> { stop ->
         call.respond(transaction {
-            val trip = TripDAO.findById(stop.parent.id)
+            val trip = TripDao.findById(stop.parent.id)
 
             if (trip == null) {
                 HttpStatusCode.NotFound
             }
             else {
-                val stops = StopTimeDAO.find { StopTimeTable.tripId eq stop.parent.id }
+                val stops = StopTimeDao.find { StopTimeTable.tripId eq stop.parent.id }
                     .map { it.stopId }
                     .map { it.toModel() }
                     .toList()
