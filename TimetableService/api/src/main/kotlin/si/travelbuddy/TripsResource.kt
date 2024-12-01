@@ -24,32 +24,54 @@ class TripsResource {
 }
 
 fun Route.trips(service: TripService) {
+    /*
+    Retrieve all trips
+     */
     get<TripsResource> { trip ->
         call.respond(transaction {
             TripDao.all().toList()
         }.map { dao -> dao.toModel() })
     }
 
+    /*
+    Retrieve trip with specified ID
+     */
     get<TripsResource.Id> { tripId ->
-        val trip = transaction { TripDao.findById(tripId.id) }
+        call.respond(transaction {
+            val trip = TripDao.findById(tripId.id)
 
-        if (trip == null) {
+            trip?.toModel() ?: HttpStatusCode.NotFound
+        })
+    }
+
+    /*
+    Delete trip with specified ID
+     */
+    delete<TripsResource.Id> { tripId ->
+        if (TripDao.findById(tripId.id) == null) {
             call.respond(HttpStatusCode.NotFound)
         }
-        else {
-            call.respond(HttpStatusCode.OK, trip.toModel())
-        }
-    }
 
-    delete<TripsResource.Id> { tripId ->
         service.delete(tripId.id)
+        call.respond(HttpStatusCode.OK)
     }
 
+    /*
+    Update trip with specified ID
+     */
     put<TripsResource.Id> { tripId ->
+        if (TripDao.findById(tripId.id) == null) {
+            call.respond(HttpStatusCode.NotFound)
+        }
+
         val trip = call.receive<TripDto>()
         service.update(tripId.id, trip)
+        call.respond(HttpStatusCode.OK)
     }
 
+    /*
+    Retrieve stops for trip with specified ID
+     */
     get<TripsResource.Id.Stops> { stop ->
         call.respond(transaction {
             val trip = TripDao.findById(stop.parent.id)

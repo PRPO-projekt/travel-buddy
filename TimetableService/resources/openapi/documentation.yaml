@@ -8,11 +8,11 @@ servers:
 paths:
   /gtfs/import:
     post:
-      description: "Upload GTFS feed as ZIP file\n\n        Example curl command:\
-        \ `curl -X POST http://localhost:8080/gtfs/import --data-binary @/home/nikola/Downloads/b2b.gtfs.zip`"
+      description: "Upload GTFS feed as ZIP file"
   /stops:
     get:
-      description: ""
+      description: "Retrieve all stops. Use the `name` parameter to filter stops by\
+        \ name."
       parameters:
       - name: "name"
         in: "query"
@@ -30,20 +30,7 @@ paths:
                   $ref: "#/components/schemas/Stop"
   /stops/{id}:
     delete:
-      description: ""
-      parameters:
-      - name: "name"
-        in: "query"
-        required: false
-        schema:
-          type: "string"
-      - name: "id"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-    get:
-      description: ""
+      description: "Delete stop with specified ID"
       parameters:
       - name: "name"
         in: "query"
@@ -67,9 +54,29 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/Stop"
-    put:
-      description: ""
+                type: "object"
+    get:
+      description: "Retrieve stop with specified ID"
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+    post:
+      description: "Add new stop"
       parameters:
       - name: "name"
         in: "query"
@@ -87,9 +94,15 @@ paths:
             schema:
               $ref: "#/components/schemas/StopDto"
         required: true
-  /stops/{id}/departures:
-    get:
-      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+    put:
+      description: "Update stop with specified ID"
       parameters:
       - name: "name"
         in: "query"
@@ -101,6 +114,45 @@ paths:
         required: true
         schema:
           type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StopDto"
+        required: true
+      responses:
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /stops/{id}/departures:
+    get:
+      description: "Retrieve departures for stop with specified ID. Use the `from`\
+        \ and `until` parameters to filter by departure time."
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "parent"
+        in: "query"
+        required: true
+        schema:
+          type: "object"
       - name: "from"
         in: "query"
         required: false
@@ -117,9 +169,91 @@ paths:
           content:
             '*/*':
               schema: {}
+    post:
+      description: "Add new departure"
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "parent"
+        in: "query"
+        required: true
+        schema:
+          type: "object"
+      - name: "from"
+        in: "query"
+        required: false
+        schema:
+          type: "integer"
+      - name: "until"
+        in: "query"
+        required: false
+        schema:
+          type: "integer"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StopTimeDto"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+  /stops/{id}/departures/{id}:
+    get:
+      description: "Get departure with UUID"
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "parent"
+        in: "query"
+        required: true
+        schema:
+          type: "object"
+      - name: "from"
+        in: "query"
+        required: false
+        schema:
+          type: "integer"
+      - name: "until"
+        in: "query"
+        required: false
+        schema:
+          type: "integer"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/StopTimeDao"
   /trips:
     get:
-      description: ""
+      description: "Retrieve all trips"
       responses:
         "200":
           description: "OK"
@@ -130,8 +264,8 @@ paths:
                 items:
                   $ref: "#/components/schemas/Trip"
   /trips/{id}:
-    get:
-      description: ""
+    delete:
+      description: "Delete trip with specified ID"
       parameters:
       - name: "id"
         in: "path"
@@ -150,10 +284,52 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/Trip"
+                type: "object"
+    get:
+      description: "Retrieve trip with specified ID"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+    put:
+      description: "Update trip with specified ID"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TripDto"
+        required: true
+      responses:
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /trips/{id}/stops:
     get:
-      description: ""
+      description: "Retrieve stops for trip with specified ID"
       parameters:
       - name: "id"
         in: "path"
@@ -208,6 +384,9 @@ components:
       required:
       - "id"
       - "name"
+    Object:
+      type: "object"
+      properties: {}
     StopDto:
       type: "object"
       properties:
@@ -224,6 +403,36 @@ components:
       required:
       - "id"
       - "name"
+    StopTimeDto:
+      type: "object"
+      properties:
+        tripId:
+          type: "string"
+        arrivalTime:
+          type: "integer"
+          format: "int32"
+        departureTime:
+          type: "integer"
+          format: "int32"
+        stopId:
+          type: "string"
+    ResultRow:
+      type: "object"
+      properties:
+        fieldIndex:
+          type: "object"
+      required:
+      - "fieldIndex"
+    StopTimeDao:
+      type: "object"
+      properties:
+        writeValues:
+          $ref: "#/components/schemas/Object"
+        _readValues:
+          $ref: "#/components/schemas/ResultRow"
+      required:
+      - "id"
+      - "writeValues"
     Trip:
       type: "object"
       properties:
@@ -239,9 +448,16 @@ components:
       required:
       - "id"
       - "routeId"
-    Object:
+    TripDto:
       type: "object"
-      properties: {}
+      properties:
+        id:
+          type: "string"
+        routeId:
+          type: "string"
+      required:
+      - "id"
+      - "routeId"
     Map:
       type: "object"
       properties: {}
