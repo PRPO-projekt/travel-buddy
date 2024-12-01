@@ -4,27 +4,19 @@ info:
   description: "travel_buddy API"
   version: "1.0.0"
 servers:
-- url: "http://0.0.0.0:8080"
+- url: "https://travel_buddy"
 paths:
   /gtfs/import:
     post:
       description: "Upload GTFS feed as ZIP file\n\n        Example curl command:\
         \ `curl -X POST http://localhost:8080/gtfs/import --data-binary @/home/nikola/Downloads/b2b.gtfs.zip`"
-  /stop/{id}:
-    delete:
-      description: ""
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
+  /stops:
     get:
       description: ""
       parameters:
-      - name: "id"
-        in: "path"
-        required: true
+      - name: "name"
+        in: "query"
+        required: false
         schema:
           type: "string"
       responses:
@@ -36,9 +28,54 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Stop"
+  /stops/{id}:
+    delete:
+      description: ""
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+    get:
+      description: ""
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Stop"
     put:
       description: ""
       parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
       - name: "id"
         in: "path"
         required: true
@@ -50,10 +87,15 @@ paths:
             schema:
               $ref: "#/components/schemas/StopDto"
         required: true
-  /stop/{id}/departures:
+  /stops/{id}/departures:
     get:
       description: ""
       parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
       - name: "id"
         in: "path"
         required: true
@@ -75,15 +117,9 @@ paths:
           content:
             '*/*':
               schema: {}
-  /stops:
+  /trips:
     get:
       description: ""
-      parameters:
-      - name: "name"
-        in: "query"
-        required: false
-        schema:
-          type: "string"
       responses:
         "200":
           description: "OK"
@@ -92,20 +128,45 @@ paths:
               schema:
                 type: "array"
                 items:
-                  $ref: "#/components/schemas/Stop"
-  /:
+                  $ref: "#/components/schemas/Trip"
+  /trips/{id}:
     get:
       description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Trip"
+  /trips/{id}/stops:
+    get:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
           content:
-            text/plain:
+            '*/*':
               schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: "Hello World!"
+                $ref: "#/components/schemas/Object"
   /webjars:
     get:
       description: ""
@@ -163,6 +224,24 @@ components:
       required:
       - "id"
       - "name"
+    Trip:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        routeId:
+          type: "string"
+        tripHeadsign:
+          type: "string"
+        blockId:
+          type: "integer"
+          format: "int32"
+      required:
+      - "id"
+      - "routeId"
+    Object:
+      type: "object"
+      properties: {}
     Map:
       type: "object"
       properties: {}

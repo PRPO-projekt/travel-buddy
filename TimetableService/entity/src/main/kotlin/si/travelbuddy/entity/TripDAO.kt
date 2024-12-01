@@ -1,5 +1,6 @@
 package si.travelbuddy.entity
 
+import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -17,6 +18,7 @@ object TripTable : IdTable<String>() {
     override val primaryKey: Table.PrimaryKey = PrimaryKey(id)
 }
 
+@Serializable
 data class Trip(
     val id: String,
     val routeId: String,
@@ -31,5 +33,5 @@ class TripDAO(id: EntityID<String>) : Entity<String>(id) {
     var tripHeadsign by TripTable.tripHeadsign
     var blockId by TripTable.blockId
 
-    fun toModel() = Trip(id.value, "", tripHeadsign, blockId)
+    fun toModel(): Trip = Trip(id.value, "", tripHeadsign, blockId)
 }

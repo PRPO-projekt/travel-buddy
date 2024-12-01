@@ -19,8 +19,8 @@ fun Application.configureDatabases() {
     val stopTimeService = StopTimeService(database)
 
     routing {
-        stopsRoute()
-        stopRoute(stopService)
+        stopsRoute(stopService)
+        tripRoute()
         gtfsImportRoute(stopService, routeService, tripService, stopTimeService)
     }
 }
