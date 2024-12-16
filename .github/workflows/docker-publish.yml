@@ -33,7 +33,7 @@ jobs:
     strategy:
       matrix:
         include:
-        - image: travel-buddy/timetable-service
+        - image: PRPO-projekt/timetable-service
           dockerfile: TimetableService/Dockerfile
 
     steps:
