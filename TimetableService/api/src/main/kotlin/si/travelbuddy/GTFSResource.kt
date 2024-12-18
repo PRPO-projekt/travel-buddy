@@ -12,6 +12,7 @@ import si.travelbuddy.dto.StopDto
 import si.travelbuddy.dto.StopTimeDto
 import si.travelbuddy.dto.TripDto
 import kotlin.io.path.absolutePathString
+import kotlin.io.path.deleteIfExists
 import kotlin.io.path.writeBytes
 
 fun Route.gtfsImportRoute(
@@ -23,10 +24,9 @@ fun Route.gtfsImportRoute(
     route("/gtfs") {
         /*
         Upload GTFS feed as ZIP file
-
-        Example curl command: `curl -X POST http://localhost:8080/gtfs/import --data-binary @/home/nikola/Downloads/b2b.gtfs.zip`
          */
         post("/import") {
+            // Example curl command: `curl -X POST http://localhost:8080/gtfs/import --data-binary @/home/nikola/Downloads/b2b.gtfs.zip`
             val file = kotlin.io.path.createTempFile(prefix = "temp_import", suffix = ".zip")
             call.application.environment.log.info("Writing zip file to ${file.absolutePathString()}")
 
@@ -70,6 +70,8 @@ fun Route.gtfsImportRoute(
                     continue
                 }
             }
+
+            file.deleteIfExists()
         }
     }
 }

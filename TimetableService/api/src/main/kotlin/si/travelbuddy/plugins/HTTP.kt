@@ -9,9 +9,7 @@ import java.nio.file.Paths
 
 fun Application.configureHTTP() {
     routing {
+        swaggerUI(path = "swagger", swaggerFile = "openapi/documentation.yaml")
         openAPI(path = "openapi", swaggerFile = "openapi/documentation.yaml")
-    }
-    routing {
-        swaggerUI(path = "openapi")
     }
 }

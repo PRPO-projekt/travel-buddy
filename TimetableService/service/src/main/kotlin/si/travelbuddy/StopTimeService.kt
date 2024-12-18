@@ -45,6 +45,6 @@ class StopTimeService(private val database: Database) {
             departureTime = depTime
             tripId = trip
             stopId = stop
-        }
+        }.id.value
     }
 }
