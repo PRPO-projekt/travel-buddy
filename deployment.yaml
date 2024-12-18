@@ -16,8 +16,8 @@ spec:
         app: travel-buddy
     spec:
       containers:
-        - name: travel-buddy
-          image: ghcr.io/PRPO-projekt/travel-buddy:main
+        - name: timetable-service
+          image: ghcr.io/prpo-projekt/timetable-service:main
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
