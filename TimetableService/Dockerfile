@@ -1,6 +1,6 @@
 FROM maven:3-eclipse-temurin-17 AS build
 WORKDIR /app
-COPY . .
+COPY TimetableService/ .
 RUN mvn clean package
 
 FROM eclipse-temurin:17 AS runtime
