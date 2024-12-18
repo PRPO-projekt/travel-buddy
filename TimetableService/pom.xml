@@ -21,6 +21,7 @@
         <slf4j_version>2.0.9</slf4j_version>
         <swagger_codegen_version>1.0.36</swagger_codegen_version>
         <exposed_version>0.53.0</exposed_version>
+        <jackson.version>2.16.2</jackson.version>
 
         <h2_version>2.2.224</h2_version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
