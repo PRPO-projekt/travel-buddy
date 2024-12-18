@@ -4,7 +4,7 @@ info:
   description: "travel_buddy API"
   version: "1.0.0"
 servers:
-- url: "https://travel_buddy"
+- url: "/"
 paths:
   /gtfs/import:
     post:
@@ -148,11 +148,6 @@ paths:
         required: true
         schema:
           type: "string"
-      - name: "parent"
-        in: "query"
-        required: true
-        schema:
-          type: "object"
       - name: "from"
         in: "query"
         required: false
@@ -170,7 +165,7 @@ paths:
             '*/*':
               schema: {}
     post:
-      description: "Add new departure"
+      description: ""
       parameters:
       - name: "name"
         in: "query"
@@ -182,11 +177,6 @@ paths:
         required: true
         schema:
           type: "string"
-      - name: "parent"
-        in: "query"
-        required: true
-        schema:
-          type: "object"
       - name: "from"
         in: "query"
         required: false
@@ -210,10 +200,15 @@ paths:
             text/plain:
               schema:
                 type: "string"
-  /stops/{id}/departures/{id}:
+  /stops/{id}/departures/{depId}:
     get:
-      description: "Get departure with UUID"
+      description: ""
       parameters:
+      - name: "depId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       - name: "name"
         in: "query"
         required: false
@@ -224,11 +219,6 @@ paths:
         required: true
         schema:
           type: "string"
-      - name: "parent"
-        in: "query"
-        required: true
-        schema:
-          type: "object"
       - name: "from"
         in: "query"
         required: false
@@ -343,19 +333,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/Object"
-  /webjars:
-    get:
-      description: ""
-      responses:
-        "200":
-          description: "OK"
-          content:
-            text/html:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: "<script src='/webjars/jquery/jquery.js'></script>"
   /json/kotlinx-serialization:
     get:
       description: ""
@@ -384,6 +361,8 @@ components:
       required:
       - "id"
       - "name"
+      - "lat"
+      - "lon"
     Object:
       type: "object"
       properties: {}
@@ -403,6 +382,8 @@ components:
       required:
       - "id"
       - "name"
+      - "lat"
+      - "lon"
     StopTimeDto:
       type: "object"
       properties:
