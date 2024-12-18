@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: travel-buddy
+  labels:
+    app: travel-buddy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: travel-buddy
+  template:
+    metadata:
+      name: travel-buddy
+      labels:
+        app: travel-buddy
+    spec:
+      containers:
+        - name: travel-buddy
+          image: ghcr.io/PRPO-projekt/travel-buddy:main
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+      restartPolicy: Always
+      
