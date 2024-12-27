@@ -32,6 +32,8 @@ jobs:
         include:
         - image: PRPO-projekt/timetable-service
           context: TimetableService
+        - image: PRPO-projekt/routing-service
+          context: routing-service
 
     steps:
       - name: Checkout repository
