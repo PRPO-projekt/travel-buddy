@@ -4,7 +4,7 @@ info:
   description: "travel_buddy API"
   version: "1.0.0"
 servers:
-- url: "https://travel_buddy"
+- url: "/"
 paths:
   /:
     get:
@@ -19,100 +19,32 @@ paths:
               examples:
                 Example#1:
                   value: "Hello World!"
-  /articles:
+  /route:
     get:
       description: ""
       parameters:
-      - name: "sort"
+      - name: "fromId"
         in: "query"
-        required: false
+        required: true
+        schema:
+          type: "string"
+      - name: "toId"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "depTime"
+        in: "query"
+        required: true
         schema:
           type: "string"
       responses:
         "200":
-          description: "OK <br> Get all articles ..."
+          description: "OK"
           content:
             '*/*':
               schema:
                 type: "string"
-              examples:
-                Example#1:
-                  value: ""
-  /users:
-    post:
-      description: "Create user"
-      requestBody:
-        content:
-          '*/*':
-            schema:
-              $ref: "#/components/schemas/ExposedUser"
-        required: true
-      responses:
-        "201":
-          description: "Created"
-          content:
-            '*/*':
-              schema:
-                type: "integer"
-                format: "int32"
-  /users/{id}:
-    delete:
-      description: "Delete user"
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        schema:
-          type: "integer"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                type: "object"
-    get:
-      description: "Read user"
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        schema:
-          type: "integer"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ExposedUser"
-        "404":
-          description: "Not Found"
-          content:
-            '*/*':
-              schema:
-                type: "object"
-    put:
-      description: "Update user"
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        schema:
-          type: "integer"
-      requestBody:
-        content:
-          '*/*':
-            schema:
-              $ref: "#/components/schemas/ExposedUser"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                type: "object"
   /json/kotlinx-serialization:
     get:
       description: ""
@@ -125,16 +57,6 @@ paths:
                 $ref: "#/components/schemas/Map_String"
 components:
   schemas:
-    ExposedUser:
-      type: "object"
-      properties:
-        name:
-          type: "string"
-        age:
-          type: "integer"
-          format: "int32"
-      required:
-      - "name"
     Map:
       type: "object"
       properties: {}
