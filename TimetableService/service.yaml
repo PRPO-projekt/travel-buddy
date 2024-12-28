@@ -4,7 +4,7 @@ metadata:
   name: timetable-service
 spec:
   selector:
-    app: timetable-service
+    app: travel-buddy
   ports:
     - protocol: TCP
       port: 8080

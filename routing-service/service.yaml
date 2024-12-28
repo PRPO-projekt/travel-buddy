@@ -4,7 +4,7 @@ metadata:
   name: routing-service
 spec:
   selector:
-    app: routing-service
+    app: travel-buddy
   ports:
     - protocol: TCP
       port: 8081
