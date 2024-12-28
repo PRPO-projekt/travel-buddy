@@ -7,4 +7,4 @@ FROM eclipse-temurin:17 AS runtime
 EXPOSE 8081
 WORKDIR /app
 COPY --from=build /app/api/target/*-with-dependencies.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar", "-port=8081"]
