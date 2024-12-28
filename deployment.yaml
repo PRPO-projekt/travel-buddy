@@ -22,5 +22,11 @@ spec:
           ports:
             - containerPort: 8080
               protocol: TCP
+        - name: routing-service
+          image: ghcr.io/prpo-projekt/routing-service:main
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+              protocol: TCP
       restartPolicy: Always
       
