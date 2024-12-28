@@ -22,7 +22,7 @@
         <slf4j_version>2.0.9</slf4j_version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <main.class>io.ktor.server.netty.EngineMain</main.class>
+        <main.class>si.travelbuddy.ApplicationKt</main.class>
     </properties>
     <repositories>
     </repositories>
@@ -86,11 +86,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j_version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-config-yaml-jvm</artifactId>
-            <version>${ktor_version}</version>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
