@@ -29,5 +29,8 @@ jobs:
       - name: Deploy manifest
         run: kubectl apply -f deployment.yaml
 
-      - name: Expose service
-        run: kubectl expose deployment travel-buddy --type=LoadBalancer
+      - name: Deploy timetable service
+        run: kubectl apply -f TimetableService/service.yaml
+
+      - name: Deploy routing service
+        run: kubectl apply -f routing-service/service.yaml
