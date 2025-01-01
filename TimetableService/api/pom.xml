@@ -152,8 +152,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>si.travelbuddy</groupId>
+            <groupId>si.travelbuddy.timetable</groupId>
             <artifactId>service</artifactId>
+            <version>0.0.1</version>
         </dependency>
     </dependencies>
     <build>
