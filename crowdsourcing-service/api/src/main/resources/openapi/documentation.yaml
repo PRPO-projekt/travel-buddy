@@ -1,0 +1,8 @@
+openapi: "3.1.0"
+info:
+  title: "travel_buddy API"
+  description: "travel_buddy API"
+  version: "1.0.0"
+servers:
+- url: "https://travel_buddy"
+paths: {}
