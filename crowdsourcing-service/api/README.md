@@ -15,23 +15,27 @@ Here's a list of features included in this project:
 
 | Name                                                                   | Description                                                                        |
 |------------------------------------------------------------------------|------------------------------------------------------------------------------------|
-| [CORS](https://start.ktor.io/p/cors)                                   | Enables Cross-Origin Resource Sharing (CORS)                                       |
 | [Routing](https://start.ktor.io/p/routing)                             | Provides a structured routing DSL                                                  |
+| [Resources](https://start.ktor.io/p/resources)                         | Provides type-safe routing                                                         |
+| [CORS](https://start.ktor.io/p/cors)                                   | Enables Cross-Origin Resource Sharing (CORS)                                       |
 | [OpenAPI](https://start.ktor.io/p/openapi)                             | Serves OpenAPI documentation                                                       |
 | [Content Negotiation](https://start.ktor.io/p/content-negotiation)     | Provides automatic content conversion according to Content-Type and Accept headers |
 | [kotlinx.serialization](https://start.ktor.io/p/kotlinx-serialization) | Handles JSON serialization using kotlinx.serialization library                     |
 | [Exposed](https://start.ktor.io/p/exposed)                             | Adds Exposed database to your application                                          |
-| [Status Pages](https://start.ktor.io/p/status-pages)                   | Provides exception handling for routes                                             |
 
 ## Building & Running
 
 To build or run the project, use one of the following tasks:
 
-| Task                                                   | Description       |
-|--------------------------------------------------------|-------------------|
-| `mvn test`                                             | Run the tests     |
-| `mvn package`                                          | Build the project |
-| `java -jar target/api-0.0.1-jar-with-dependencies.jar` | Run the server    |
+| Task                          | Description                                                          |
+|-------------------------------|----------------------------------------------------------------------|
+| `./gradlew test`              | Run the tests                                                        |
+| `./gradlew build`             | Build everything                                                     |
+| `buildFatJar`                 | Build an executable JAR of the server with all dependencies included |
+| `buildImage`                  | Build the docker image to use with the fat JAR                       |
+| `publishImageToLocalRegistry` | Publish the docker image locally                                     |
+| `run`                         | Run the server                                                       |
+| `runDocker`                   | Run using the local docker image                                     |
 
 If the server starts successfully, you'll see the following output:
 
