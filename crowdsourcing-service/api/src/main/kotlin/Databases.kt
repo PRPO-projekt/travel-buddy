@@ -6,8 +6,10 @@ import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
 
 fun Application.configureDatabases() {
-    val dbPass = environment.config.propertyOrNull(path = "database.pass")?.getString()
-        ?: throw RuntimeException("Database password missing!")
+    val dbPass: String? = System.getenv("DB_PASS")
+    if (dbPass.isNullOrBlank()) {
+        throw IllegalArgumentException("DB_PASS env variable missing")
+    }
 
     val database = Database.connect(
         url = "jdbc:postgresql://traverl-buddy.postgres.database.azure.com:5432/",
