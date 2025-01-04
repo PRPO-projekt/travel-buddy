@@ -4,7 +4,7 @@ val kotlin_version: String by project
 val logback_version: String by project
 
 plugins {
-    id("org.jetbrains.kotlin.jvm")
+    kotlin("jvm")
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 

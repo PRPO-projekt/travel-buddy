@@ -4,7 +4,7 @@ val kotlin_version: String by project
 val logback_version: String by project
 
 plugins {
-    id("org.jetbrains.kotlin.jvm")
+    kotlin("jvm")
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
@@ -16,6 +16,12 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
+    implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
+    implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
+    implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0-RC")
+    implementation(project(":entity"))
     testImplementation(kotlin("test"))
 }
 

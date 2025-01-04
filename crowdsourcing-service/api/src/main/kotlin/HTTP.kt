@@ -13,6 +13,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.*
+import io.ktor.server.plugins.swagger.*
 
 fun Application.configureHTTP() {
     install(CORS) {
@@ -25,6 +26,7 @@ fun Application.configureHTTP() {
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
     }
     routing {
-        openAPI(path = "openapi")
+        openAPI(path = "openapi/documentation.yaml", swaggerFile = "openapi/documentation.yaml")
+        swaggerUI(path = "openapi/documentation.yaml", swaggerFile = "openapi/documentation.yaml")
     }
 }

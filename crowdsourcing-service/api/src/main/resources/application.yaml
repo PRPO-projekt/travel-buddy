@@ -3,4 +3,4 @@ ktor:
     modules:
       - si.travelbuddy.crowdsourcing.ApplicationKt.module
   deployment:
-    port: 8080
+    port: 8082
