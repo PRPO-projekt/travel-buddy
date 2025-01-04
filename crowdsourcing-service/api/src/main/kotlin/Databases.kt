@@ -1,26 +1,18 @@
 package si.travelbuddy.crowdsourcing
 
 import DepartureDelayService
-import io.ktor.http.*
-import io.ktor.resources.*
-import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
-import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.plugins.cors.routing.*
-import io.ktor.server.plugins.openapi.*
-import io.ktor.server.request.*
-import io.ktor.server.resources.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.serialization.Serializable
-import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.Database
 
 fun Application.configureDatabases() {
+    val dbPass = environment.config.propertyOrNull(path = "database.pass")?.getString()
+        ?: throw RuntimeException("Database password missing!")
+
     val database = Database.connect(
-        url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
-        user = "root",
-        driver = "org.h2.Driver",
-        password = "",
+        url = "jdbc:postgresql://traverl-buddy.postgres.database.azure.com:5432/",
+        user = "prpo",
+        password = dbPass
     )
 
     val depService = DepartureDelayService(database)

@@ -9,6 +9,7 @@ import io.ktor.server.request.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.routing.post
 import org.jetbrains.exposed.sql.transactions.transaction
 
 @Resource("/departureDelay")
@@ -16,7 +17,7 @@ class DepartureDelayResource() {
     @Resource("{id}")
     class Id(val id: Int)
 
-    @Resource("average")
+    @Resource("/departureDelay/average")
     class Average()
 }
 
@@ -32,7 +33,7 @@ fun Route.departureDelay(departureService: DepartureDelayService) {
         val created = departureService.create(
             DepartureDelayDto(dto.expectedTime, dto.actualTime, dto.userId)
         )
-        call.respond(HttpStatusCode.Created, created.userId!!)
+        call.respond(HttpStatusCode.Created, created.id)
     }
 
     get<DepartureDelayResource.Id> { id ->
