@@ -1,5 +1,6 @@
 package si.travelbuddy.crowdsourcing
 
+import DepartureDelayService
 import io.ktor.http.*
 import io.ktor.resources.*
 import io.ktor.serialization.kotlinx.json.*
@@ -21,4 +22,10 @@ fun Application.configureDatabases() {
         driver = "org.h2.Driver",
         password = "",
     )
+
+    val depService = DepartureDelayService(database)
+
+    routing {
+        departureDelay(depService)
+    }
 }

@@ -16,12 +16,14 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":entity"))
+
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0-RC")
-    implementation(project(":entity"))
+
     testImplementation(kotlin("test"))
 }
 

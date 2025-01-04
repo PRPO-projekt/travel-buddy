@@ -24,4 +24,16 @@ class DepartureDelayService(private val database: Database) {
             userId = departureDelay.userId
         }
     }
+
+    suspend fun averageDelay() = dbQuery {
+        val actualAverage = DepartureDelayTable.actualTime.avg()
+        val expectedAverage = DepartureDelayTable.expectedTime.avg()
+
+        val p = DepartureDelayTable.select(actualAverage, expectedAverage).map {
+            Pair(it[actualAverage], it[expectedAverage])
+        }[0]
+
+        val res = p.first!! - p.second!!
+        res
+    }
 }

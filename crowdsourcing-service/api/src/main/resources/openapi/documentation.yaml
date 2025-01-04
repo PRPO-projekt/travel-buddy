@@ -4,5 +4,95 @@ info:
   description: "travel_buddy API"
   version: "1.0.0"
 servers:
-- url: "https://travel_buddy"
-paths: {}
+- url: "/"
+paths:
+  /departureDelay:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            'application/json':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/DepartureDelay"
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DepartureDelayDto"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /departureDelay/{id}:
+    get:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+  /departureDelay/average:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BigDecimal"
+components:
+  schemas:
+    DepartureDelay:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int32"
+        expectedTime:
+          type: "string"
+        actualTime:
+          type: "string"
+        userId:
+          type: "string"
+      required:
+      - "id"
+      - "expectedTime"
+      - "actualTime"
+    DepartureDelayDto:
+      type: "object"
+      properties:
+        expectedTime:
+          type: "string"
+        actualTime:
+          type: "string"
+        userId:
+          type: "string"
+      required:
+      - "expectedTime"
+      - "actualTime"
+      - "userId"
+    Object:
+      type: "object"
+      properties: {}
+    BigDecimal:
+      type: "object"
+      properties: {}

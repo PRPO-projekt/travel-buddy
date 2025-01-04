@@ -15,4 +15,7 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.*
 
 fun Application.configureSerialization() {
+    install(ContentNegotiation) {
+        json()
+    }
 }
