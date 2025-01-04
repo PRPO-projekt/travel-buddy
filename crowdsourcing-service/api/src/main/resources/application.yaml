@@ -4,5 +4,3 @@ ktor:
       - si.travelbuddy.crowdsourcing.ApplicationKt.module
   deployment:
     port: 8082
-  database:
-    pass: ${?SERVICE_DATABASE_PASS}
