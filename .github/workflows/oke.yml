@@ -34,3 +34,6 @@ jobs:
 
       - name: Deploy routing service
         run: kubectl apply -f routing-service/service.yaml
+        
+      - name: Deploy crowdsourcing service
+        run: kubectl apply -f crowdsourcing-service/service.yaml
