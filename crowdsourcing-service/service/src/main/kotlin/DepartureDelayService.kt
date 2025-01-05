@@ -5,7 +5,10 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.format.DateTimeParseException
 import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Local
+import kotlin.time.Duration
+import kotlin.time.toJavaDuration
 
 class DepartureDelayService(private val database: Database) {
     init {
@@ -18,22 +21,16 @@ class DepartureDelayService(private val database: Database) {
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
     fun create(departureDelay: DepartureDelayDto) = transaction {
+        val dur = Duration.parse(departureDelay.delay)
+
         DepartureDelayDao.new {
-            expectedTime = LocalDateTime.parse(departureDelay.expectedTime)
-            actualTime = LocalDateTime.parse(departureDelay.actualTime)
+            delay = dur.toJavaDuration()
+            stopId = departureDelay.stopId
             userId = departureDelay.userId
         }
     }
 
-    suspend fun averageDelay() = dbQuery {
-        val actualAverage = DepartureDelayTable.actualTime.avg()
-        val expectedAverage = DepartureDelayTable.expectedTime.avg()
+    suspend fun averageDelay(stopId: String? = null) = dbQuery {
 
-        val p = DepartureDelayTable.select(actualAverage, expectedAverage).map {
-            Pair(it[actualAverage], it[expectedAverage])
-        }[0]
-
-        val res = p.first!! - p.second!!
-        res
     }
 }
