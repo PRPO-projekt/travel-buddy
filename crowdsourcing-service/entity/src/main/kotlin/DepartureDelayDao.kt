@@ -13,7 +13,7 @@ object DepartureDelayTable : IntIdTable() {
     val delay = duration("delay")
 
     val userId = varchar("user_id", 32).nullable()
-    val stopId = varchar("stop_id", 32)
+    val stopTimeId = varchar("stop_time_id", 32)
 }
 
 @Serializable
@@ -21,7 +21,7 @@ data class DepartureDelay(
     val id: Int,
     val delay: kotlin.time.Duration,
     val userId: String?,
-    val stopId: String
+    val stopTimeId: String
 )
 
 class DepartureDelayDao(id: EntityID<Int>) : IntEntity(id) {
@@ -30,12 +30,12 @@ class DepartureDelayDao(id: EntityID<Int>) : IntEntity(id) {
     var delay by DepartureDelayTable.delay
 
     var userId by DepartureDelayTable.userId
-    var stopId by DepartureDelayTable.stopId
+    var stopTimeId by DepartureDelayTable.stopTimeId
 
     fun toModel(): DepartureDelay = DepartureDelay(
         id.value,
         delay.toKotlinDuration(),
         userId.toString(),
-        stopId
+        stopTimeId
     )
 }

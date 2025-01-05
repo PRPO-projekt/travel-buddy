@@ -3,10 +3,6 @@ import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.format.DateTimeParseException
-import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Local
 import kotlin.time.Duration
 import kotlin.time.toJavaDuration
 
@@ -25,19 +21,19 @@ class DepartureDelayService(private val database: Database) {
 
         DepartureDelayDao.new {
             delay = dur.toJavaDuration()
-            stopId = departureDelay.stopId
+            stopTimeId = departureDelay.stopTimeId
             userId = departureDelay.userId
         }
     }
 
-    private suspend fun findByStopId(stopId: String) = dbQuery {
+    private suspend fun findByStopTimeId(stopTimeId: String) = dbQuery {
         DepartureDelayDao.find {
-            DepartureDelayTable.stopId eq stopId
+            DepartureDelayTable.stopTimeId eq stopTimeId
         }
     }
 
-    suspend fun averageDelay(stopId: String? = null) = dbQuery {
-        val delays = if (stopId == null) { DepartureDelayDao.all() } else { findByStopId(stopId) }
+    suspend fun averageDelay(stopTimeId: String? = null) = dbQuery {
+        val delays = if (stopTimeId == null) { DepartureDelayDao.all() } else { findByStopTimeId(stopTimeId) }
 
         delays.map { it.delay.toMinutes() }.average()
     }

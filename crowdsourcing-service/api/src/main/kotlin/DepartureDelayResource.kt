@@ -13,7 +13,7 @@ import io.ktor.server.routing.post
 import org.jetbrains.exposed.sql.transactions.transaction
 
 @Resource("/delay")
-class DepartureDelayResource(val stopId: String? = null) {
+class DepartureDelayResource(val stopTimeId: String? = null) {
     @Resource("{id}")
     class Id(val parent: DepartureDelayResource = DepartureDelayResource(), val id: Int)
 
@@ -25,11 +25,11 @@ fun Route.departureDelay(departureService: DepartureDelayService) {
     get<DepartureDelayResource> { dep ->
         call.respond(transaction {
             DepartureDelayDao.all().toList()
-        }.map { it.toModel() }.filter { dep.stopId == null || it.stopId == dep.stopId })
+        }.map { it.toModel() }.filter { dep.stopTimeId == null || it.stopTimeId == dep.stopTimeId })
     }
 
     get<DepartureDelayResource.Average> { average ->
-        call.respond(departureService.averageDelay(average.parent.stopId))
+        call.respond(departureService.averageDelay(average.parent.stopTimeId))
     }
 
     get<DepartureDelayResource.Id> { id ->

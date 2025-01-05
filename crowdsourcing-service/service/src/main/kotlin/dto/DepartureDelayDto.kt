@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class DepartureDelayDto(
     val delay: String,
     val userId: String,
-    val stopId: String
+    val stopTimeId: String
 )

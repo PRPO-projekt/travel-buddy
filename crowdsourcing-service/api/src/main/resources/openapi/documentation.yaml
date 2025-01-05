@@ -10,7 +10,7 @@ paths:
     get:
       description: ""
       parameters:
-      - name: "stopId"
+      - name: "stopTimeId"
         in: "query"
         required: false
         schema:
@@ -44,7 +44,7 @@ paths:
     get:
       description: ""
       parameters:
-      - name: "stopId"
+      - name: "stopTimeId"
         in: "query"
         required: false
         schema:
@@ -65,7 +65,7 @@ paths:
     get:
       description: ""
       parameters:
-      - name: "stopId"
+      - name: "stopTimeId"
         in: "query"
         required: false
         schema:
@@ -91,12 +91,12 @@ components:
           format: "int64"
         userId:
           type: "string"
-        stopId:
+        stopTimeId:
           type: "string"
       required:
       - "id"
       - "delay"
-      - "stopId"
+      - "stopTimeId"
     DepartureDelayDto:
       type: "object"
       properties:
@@ -104,12 +104,12 @@ components:
           type: "string"
         userId:
           type: "string"
-        stopId:
+        stopTimeId:
           type: "string"
       required:
       - "delay"
       - "userId"
-      - "stopId"
+      - "stopTimeId"
     Object:
       type: "object"
       properties: {}
