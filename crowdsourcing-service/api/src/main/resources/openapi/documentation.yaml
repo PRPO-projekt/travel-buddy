@@ -6,9 +6,15 @@ info:
 servers:
 - url: "/"
 paths:
-  /departureDelay:
+  /delay:
     get:
       description: ""
+      parameters:
+      - name: "stopTimeId"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
@@ -32,11 +38,17 @@ paths:
           content:
             '*/*':
               schema:
-                type: "string"
-  /departureDelay/{id}:
+                type: "integer"
+                format: "int32"
+  /delay/{id}:
     get:
       description: ""
       parameters:
+      - name: "stopTimeId"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
       - name: "id"
         in: "path"
         required: true
@@ -49,16 +61,23 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/Object"
-  /departureDelay/average:
+  /delay/average:
     get:
       description: ""
+      parameters:
+      - name: "stopTimeId"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/BigDecimal"
+                type: "number"
+                format: "double"
 components:
   schemas:
     DepartureDelay:
@@ -67,32 +86,30 @@ components:
         id:
           type: "integer"
           format: "int32"
-        expectedTime:
-          type: "string"
-        actualTime:
-          type: "string"
+        delay:
+          type: "integer"
+          format: "int64"
         userId:
+          type: "string"
+        stopTimeId:
           type: "string"
       required:
       - "id"
-      - "expectedTime"
-      - "actualTime"
+      - "delay"
+      - "stopTimeId"
     DepartureDelayDto:
       type: "object"
       properties:
-        expectedTime:
-          type: "string"
-        actualTime:
+        delay:
           type: "string"
         userId:
           type: "string"
+        stopTimeId:
+          type: "string"
       required:
-      - "expectedTime"
-      - "actualTime"
+      - "delay"
       - "userId"
+      - "stopTimeId"
     Object:
-      type: "object"
-      properties: {}
-    BigDecimal:
       type: "object"
       properties: {}

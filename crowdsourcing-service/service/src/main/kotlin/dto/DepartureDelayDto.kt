@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DepartureDelayDto(
-    val expectedTime: String,
-    val actualTime: String,
-    val userId: String
+    val delay: String,
+    val userId: String,
+    val stopTimeId: String
 )

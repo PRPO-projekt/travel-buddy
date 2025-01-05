@@ -6,29 +6,36 @@ import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.javatime.datetime
+import org.jetbrains.exposed.sql.javatime.duration
+import kotlin.time.toKotlinDuration
 
 object DepartureDelayTable : IntIdTable() {
-    val expectedTime = datetime("expected_time")
-    val actualTime = datetime("actual_time")
+    val delay = duration("delay")
 
     val userId = varchar("user_id", 32).nullable()
+    val stopTimeId = varchar("stop_time_id", 32)
 }
 
 @Serializable
 data class DepartureDelay(
     val id: Int,
-    val expectedTime: String,
-    val actualTime: String,
-    val userId: String?
+    val delay: kotlin.time.Duration,
+    val userId: String?,
+    val stopTimeId: String
 )
 
 class DepartureDelayDao(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<DepartureDelayDao>(DepartureDelayTable)
 
-    var expectedTime by DepartureDelayTable.expectedTime
-    var actualTime by DepartureDelayTable.actualTime
+    var delay by DepartureDelayTable.delay
 
     var userId by DepartureDelayTable.userId
+    var stopTimeId by DepartureDelayTable.stopTimeId
 
-    fun toModel(): DepartureDelay = DepartureDelay(id.value, expectedTime.toString(), actualTime.toString(), userId.toString())
+    fun toModel(): DepartureDelay = DepartureDelay(
+        id.value,
+        delay.toKotlinDuration(),
+        userId.toString(),
+        stopTimeId
+    )
 }
