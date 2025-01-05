@@ -1,0 +1,64 @@
+openapi: "3.1.0"
+info:
+  title: "travel_buddy API"
+  description: "travel_buddy API"
+  version: "1.0.0"
+servers:
+- url: "/"
+paths:
+  /:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Hello World!"
+  /route:
+    get:
+      description: ""
+      parameters:
+      - name: "fromId"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "toId"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "depTime"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /json/kotlinx-serialization:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Map_String"
+components:
+  schemas:
+    Map:
+      type: "object"
+      properties: {}
+    Map_String:
+      type: "string"
