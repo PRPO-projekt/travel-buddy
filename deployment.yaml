@@ -28,5 +28,17 @@ spec:
           ports:
             - containerPort: 8081
               protocol: TCP
+        - name: crowdsourcing-service
+          image: ghcr.io/prpo-projekt/crowdsourcing-service:main
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082
+              protocol: TCP
+          env:
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: prpo-db
+                  key: db-pass
       restartPolicy: Always
       
