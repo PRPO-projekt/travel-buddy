@@ -30,7 +30,15 @@ class DepartureDelayService(private val database: Database) {
         }
     }
 
-    suspend fun averageDelay(stopId: String? = null) = dbQuery {
+    private suspend fun findByStopId(stopId: String) = dbQuery {
+        DepartureDelayDao.find {
+            DepartureDelayTable.stopId eq stopId
+        }
+    }
 
+    suspend fun averageDelay(stopId: String? = null) = dbQuery {
+        val delays = if (stopId == null) { DepartureDelayDao.all() } else { findByStopId(stopId) }
+
+        delays.map { it.delay.toMinutes() }.average()
     }
 }

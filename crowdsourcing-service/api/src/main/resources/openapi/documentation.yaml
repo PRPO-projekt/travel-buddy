@@ -38,7 +38,8 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/EntityID_Integer"
+                type: "integer"
+                format: "int32"
   /delay/{id}:
     get:
       description: ""
@@ -75,7 +76,8 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/Unit"
+                type: "number"
+                format: "double"
 components:
   schemas:
     DepartureDelay:
@@ -109,23 +111,5 @@ components:
       - "userId"
       - "stopId"
     Object:
-      type: "object"
-      properties: {}
-    EntityID:
-      type: "object"
-      properties:
-        _value:
-          $ref: "#/components/schemas/Object"
-      required:
-      - "table"
-    EntityID_Integer:
-      type: "object"
-      properties:
-        table:
-          type: "integer"
-          format: "int32"
-        _value:
-          $ref: "#/components/schemas/Object"
-    Unit:
       type: "object"
       properties: {}

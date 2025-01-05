@@ -29,7 +29,7 @@ fun Route.departureDelay(departureService: DepartureDelayService) {
     }
 
     get<DepartureDelayResource.Average> { average ->
-        call.respond(departureService.averageDelay())
+        call.respond(departureService.averageDelay(average.parent.stopId))
     }
 
     get<DepartureDelayResource.Id> { id ->
