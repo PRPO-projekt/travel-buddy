@@ -6,11 +6,15 @@ import org.jetbrains.exposed.sql.*
 import si.travelbuddy.*
 
 fun Application.configureDatabases() {
+    val dbPass: String? = System.getenv("DB_PASS")
+    if (dbPass.isNullOrBlank()) {
+        throw IllegalArgumentException("DB_PASS env variable missing")
+    }
+
     val database = Database.connect(
-        url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
-        user = "root",
-        driver = "org.h2.Driver",
-        password = "",
+        url = "jdbc:postgresql://traverl-buddy.postgres.database.azure.com:5432/",
+        user = "prpo",
+        password = dbPass
     )
 
     val stopService = StopService(database)
