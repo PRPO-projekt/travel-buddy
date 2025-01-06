@@ -168,7 +168,7 @@
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
         <resources>
             <resource>
-                <directory>../resources</directory>
+                <directory>resources</directory>
             </resource>
         </resources>
 
