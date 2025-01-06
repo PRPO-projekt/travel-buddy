@@ -6,9 +6,9 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
+import si.travelbuddy.dto.CreateUserDto
 import si.travelbuddy.dto.UpdateUserDto
 import si.travelbuddy.dto.UpdateUserPasswordDto
-import si.travelbuddy.dto.UserDto
 import java.security.SecureRandom
 import java.security.spec.KeySpec
 import javax.crypto.SecretKey
@@ -20,7 +20,7 @@ private const val ITERATIONS = 120_000
 private const val KEY_LENGTH = 256
 private const val SECRET = "TravelBuddySecret"
 
-class UserService(private val dataBase: Database) {
+class AuthService(private val dataBase: Database) {
 
     init {
         transaction {
@@ -31,13 +31,14 @@ class UserService(private val dataBase: Database) {
     private suspend fun <T> dbQuery(block: suspend () -> T): T =
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
-    fun create(user: UserDto) : Long = transaction {
+    suspend fun create(user: CreateUserDto) : Long = transaction {
+        var salt = generateRandomSalt().toHexString()
         UserDao.new {
             this.username = user.username
             this.name = user.name
             this.surname = user.surname
-            this.passwordHash = user.passwordHash
-            this.passwordSalt = user.passwordSalt
+            this.passwordHash = generateHash(user.password, salt)
+            this.passwordSalt = salt
             this.created = user.created.toInstant()
         }.id.value
     }
@@ -49,11 +50,12 @@ class UserService(private val dataBase: Database) {
             if (user.username != null) it[username] = user.username
         }
     }
-    // TODO implement hashing with salt
+
     suspend fun updatePassword(user: UpdateUserPasswordDto) = dbQuery {
+        var salt = generateRandomSalt().toHexString()
         UserTable.update({ UserTable.id eq user.id }) {
-            it[passwordHash] = user.passwordPlaintext
-            it[passwordSalt] = user.passwordPlaintext
+            it[passwordHash] = generateHash(user.password, salt)
+            it[passwordSalt] = salt
         }
     }
 
@@ -68,7 +70,7 @@ class UserService(private val dataBase: Database) {
         return joinToString("") { "%02x".format(it) }
     }
 
-    fun generateHash(password: String, salt: String): String {
+    private fun generateHash(password: String, salt: String): String {
         val combinedSalt = "$salt$SECRET".toByteArray()
         val factory: SecretKeyFactory = SecretKeyFactory.getInstance(ALGORITHM)
         val spec: KeySpec = PBEKeySpec(password.toCharArray(), combinedSalt, ITERATIONS, KEY_LENGTH)

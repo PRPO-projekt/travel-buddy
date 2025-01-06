@@ -93,6 +93,11 @@
             <version>${ktor_version}</version>
         </dependency>
         <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-resources-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback_version}</version>
@@ -130,6 +135,11 @@
             <artifactId>swagger-codegen-generators</artifactId>
             <version>${swagger_codegen_version}</version>
         </dependency>
+        <dependency>
+            <groupId>si.travelbuddy</groupId>
+            <artifactId>service</artifactId>
+        </dependency>
+
     </dependencies>
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>

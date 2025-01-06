@@ -14,7 +14,7 @@
         <module>service</module>
     </modules>
     <properties>
-        <ktor_version>3.0.0</ktor_version>
+        <ktor_version>3.0.1</ktor_version>
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin_version>2.0.21</kotlin_version>
         <logback_version>1.4.14</logback_version>
