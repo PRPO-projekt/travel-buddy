@@ -8,6 +8,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>api</artifactId>
+    <version>0.0.1</version>
     <groupId>si.travelbuddy.poi</groupId>
     <dependencies>
         <dependency>
@@ -149,12 +150,6 @@
             <artifactId>kotlin-test</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-core-jvm</artifactId>
-            <version>3.0.3</version>
-            <scope>compile</scope>
         </dependency>
 
     </dependencies>
