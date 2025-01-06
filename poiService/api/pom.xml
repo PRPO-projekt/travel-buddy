@@ -102,11 +102,6 @@
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-netty-jvm</artifactId>
-            <version>${ktor_version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
             <artifactId>ktor-server-resources-jvm</artifactId>
             <version>${ktor_version}</version>
         </dependency>
@@ -150,11 +145,6 @@
             <version>6.2.0</version>
         </dependency>
         <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <version>12.6.3.jre11</version>
-        </dependency>
-        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test</artifactId>
             <version>${kotlin.version}</version>
@@ -173,7 +163,7 @@
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
         <resources>
             <resource>
-                <directory>resources</directory>
+                <directory>../resources</directory>
             </resource>
         </resources>
 
