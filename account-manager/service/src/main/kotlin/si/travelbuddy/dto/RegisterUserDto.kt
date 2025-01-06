@@ -2,7 +2,7 @@ package si.travelbuddy.dto
 
 import java.time.ZonedDateTime
 
-data class CreateUserDto (
+data class RegisterUserDto (
     val id: Long,
     val name: String,
     val surname: String,
