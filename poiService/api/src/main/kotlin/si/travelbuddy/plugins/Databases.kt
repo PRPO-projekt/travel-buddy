@@ -13,14 +13,9 @@ fun Application.configureDatabases() {
         password = "",
     )
 
-    val stopService = StopService(database)
-    val routeService = RouteService(database)
-    val tripService = TripService(database)
-    val stopTimeService = StopTimeService(database)
+    val poiServiceHandle = poiService(database)
 
     routing {
-        stops(stopService, stopTimeService)
-        trips(tripService)
-        gtfsImportRoute(stopService, routeService, tripService, stopTimeService)
+        pois(poiServiceHandle)
     }
 }

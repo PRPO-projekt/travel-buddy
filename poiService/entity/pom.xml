@@ -7,14 +7,19 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>service</artifactId>
+    <artifactId>entity</artifactId>
     <groupId>si.travelbuddy.poi</groupId>
-
+    <version>0.0.1</version>
     <properties>
         <kotlin.version>1.9.23</kotlin.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-jetty-jakarta-jvm</artifactId>
+            <version>3.0.3</version>
+        </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
@@ -99,7 +104,6 @@
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>src/test/kotlin</testSourceDirectory>
 
         <plugins>
             <plugin>

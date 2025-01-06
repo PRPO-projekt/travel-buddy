@@ -13,7 +13,7 @@ object poiTable : IntIdTable(name = "poi") {
     val poiDescription = varchar("description", 512)
     val lat = double("lat")
     val lon = double("lon")
-    val idPostaje = varchar("idPostaje", 64)
+    val idPostaje = varchar("id_postaje", 64)
 }
 
 @Serializable
@@ -37,10 +37,10 @@ class poiDao(id: EntityID<Int>) : Entity<Int>(id) {
 
 
     fun toModel(): poi = poi(
-        id = id.value,
         name = name,
         description = description,
         lat = lat,
         lon = lon,
         idPostaje = idPostaje
-    )}
+    )
+}
