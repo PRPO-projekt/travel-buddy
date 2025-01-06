@@ -1,6 +1,5 @@
 package si.travelbuddy.userManager
 
-import DepartureDelayService
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
@@ -17,9 +16,11 @@ fun Application.configureDatabases() {
         password = dbPass
     )
 
-    val depService = DepartureDelayService(database)
 
-    routing {
-        departureDelay(depService)
-    }
+//    FIXME: Delete if necessary
+//    val depService = DepartureDelayService(database)
+
+//    routing {
+//        departureDelay(depService)
+//    }
 }
