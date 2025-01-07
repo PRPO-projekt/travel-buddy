@@ -36,6 +36,8 @@ jobs:
           context: routing-service
         - image: PRPO-projekt/crowdsourcing-service
           context: crowdsourcing-service
+        - image: PRPO-projekt/account-manager-service
+          context: account-manager
 
     steps:
       - name: Checkout repository
