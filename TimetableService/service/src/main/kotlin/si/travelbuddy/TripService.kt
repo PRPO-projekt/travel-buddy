@@ -1,6 +1,7 @@
 package si.travelbuddy
 
 import kotlinx.coroutines.Dispatchers
+
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -8,6 +9,7 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
+
 import si.travelbuddy.dto.TripDto
 import si.travelbuddy.entity.*
 

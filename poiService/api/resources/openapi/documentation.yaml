@@ -1,0 +1,120 @@
+openapi: "3.1.0"
+info:
+  title: "poiService API"
+  description: "poiService API"
+  version: "1.0.0"
+servers:
+- url: "/"
+paths:
+  /pois:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/poi"
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/poiDto"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /pois/{id}:
+    delete:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+    get:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/poi"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /json/kotlinx-serialization:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Map_String"
+components:
+  schemas:
+    poi:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int32"
+        name:
+          type: "string"
+        description:
+          type: "string"
+        lat:
+          type: "number"
+          format: "double"
+        lon:
+          type: "number"
+          format: "double"
+        idPostaje:
+          type: "integer"
+          format: "int32"
+    poiDto:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int32"
+        name:
+          type: "string"
+        description:
+          type: "string"
+        lat:
+          type: "number"
+          format: "double"
+        lon:
+          type: "number"
+          format: "double"
+        idPostaje:
+          type: "integer"
+          format: "int32"
+    Map:
+      type: "object"
+      properties: {}
+    Map_String:
+      type: "string"

@@ -6,21 +6,24 @@ import io.ktor.server.request.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.jetbrains.exposed.sql.transactions.transaction
 import si.travelbuddy.dto.poiDto
+import si.travelbuddy.entity.poiDao
 
 
 @Resource("/pois")
-class poiResource (
-    val name: String =".*"
-) {
-
+class poiResource () {
     @Resource("{id}")
     class Id(val parent : poiResource = poiResource(), val id: Int) {
-
     }
-
 }
 fun Route.pois(poiServiceHandle: poiService) {
+    get("/pois"){
+        call.respond(transaction {
+            poiDao.all().toList()
+        }.map{ dao -> dao.toModel() })
+    }
+
     get<poiResource.Id> { poiId ->
         val poi = poiServiceHandle.getById(poiId.id)
         if (poi != null) {

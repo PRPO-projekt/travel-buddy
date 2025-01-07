@@ -6,6 +6,6 @@ data class poiDto (
     val description: String ?= null,
     val lat: Double ?= null,
     val lon: Double ?= null,
-    val idPostaje: Int ?= -1,
+    val idPostaje: Int ?= null,
 )
 

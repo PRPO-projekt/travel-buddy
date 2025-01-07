@@ -8,22 +8,22 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 
 
 object poiTable : IntIdTable(name = "poi") {
-    val poiId = integer("id")
+    //val poiId = integer("id")
     val poiName = varchar("name", 64)
     val poiDescription = varchar("description", 512)
     val lat = double("lat")
     val lon = double("lon")
-    val idPostaje = varchar("id_postaje", 64)
+    val idPostaje = integer("id_postaje")
 }
 
 @Serializable
 data class poi(
-    val id: Int?= null,
+    val id: Int,
     val name: String ?= null,
     val description: String?= null,
     val lat: Double ?= null,
     val lon: Double ?= null,
-    val idPostaje: String ?= null,
+    val idPostaje: Int ?= null,
 )
 
 class poiDao(id: EntityID<Int>) : Entity<Int>(id) {
@@ -37,6 +37,7 @@ class poiDao(id: EntityID<Int>) : Entity<Int>(id) {
 
 
     fun toModel(): poi = poi(
+        id = id.value,
         name = name,
         description = description,
         lat = lat,
