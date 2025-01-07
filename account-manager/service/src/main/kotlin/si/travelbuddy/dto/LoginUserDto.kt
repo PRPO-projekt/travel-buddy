@@ -3,9 +3,7 @@ package si.travelbuddy.dto
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RegisterUserDto (
-    val name: String,
-    val surname: String,
+data class LoginUserDto (
     val username: String,
     val password: String,
 )

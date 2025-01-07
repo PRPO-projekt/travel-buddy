@@ -26,7 +26,7 @@ class UserDao(id: EntityID<Long>) : LongEntity(id) {
     var passwordSalt by UserTable.passwordSalt
     var created by UserTable.created
 
-    fun toUser(): User = User(id.value, name, surname, username, passwordHash, passwordSalt, created.toString())
+    fun toModel(): User = User(id.value, name, surname, username, passwordHash, passwordSalt, created.toString())
 }
 
 @Serializable

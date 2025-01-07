@@ -35,15 +35,4 @@ fun Application.configureRouting() {
             call.respondText(text = "500: $cause", status = HttpStatusCode.InternalServerError)
         }
     }
-    routing {
-        get("/") {
-            call.respondText("Hello World!")
-        }
-        get("/webjars") {
-            call.respondText("<script src='/webjars/jquery/jquery.js'></script>", ContentType.Text.Html)
-        }
-        post("/stops") {
-
-        }
-    }
 }

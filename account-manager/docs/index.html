@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>ktor_example API</title>
+  <title>account_manager API</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="UTF-8" />
@@ -689,19 +689,26 @@
   <script>
     // Script section to load models into a JS Var
     var defs = {}
-            defs["ExposedUser"] = {
-  "required" : [ "name" ],
+            defs["LoginUserDto"] = {
+  "required" : [ "password", "username" ],
   "properties" : {
-    "name" : { },
-    "age" : {
-      "format" : "int32"
-    }
+    "username" : { },
+    "password" : { }
   }
 };
             defs["Map"] = {
   "properties" : { }
 };
             defs["Map_String"] = { };
+            defs["RegisterUserDto"] = {
+  "required" : [ "name", "password", "surname", "username" ],
+  "properties" : {
+    "name" : { },
+    "surname" : { },
+    "username" : { },
+    "password" : { }
+  }
+};
   </script>
 
   <div class="container-fluid">
@@ -722,26 +729,11 @@
                     <li data-group="Default" data-name="jsonKotlinxSerializationGet" class="">
                       <a href="#api-Default-jsonKotlinxSerializationGet">jsonKotlinxSerializationGet</a>
                     </li>
-                    <li data-group="Default" data-name="rootGet" class="">
-                      <a href="#api-Default-rootGet">rootGet</a>
+                    <li data-group="Default" data-name="loginPost" class="">
+                      <a href="#api-Default-loginPost">loginPost</a>
                     </li>
-                    <li data-group="Default" data-name="testGet" class="">
-                      <a href="#api-Default-testGet">testGet</a>
-                    </li>
-                    <li data-group="Default" data-name="usersIdDelete" class="">
-                      <a href="#api-Default-usersIdDelete">usersIdDelete</a>
-                    </li>
-                    <li data-group="Default" data-name="usersIdGet" class="">
-                      <a href="#api-Default-usersIdGet">usersIdGet</a>
-                    </li>
-                    <li data-group="Default" data-name="usersIdPut" class="">
-                      <a href="#api-Default-usersIdPut">usersIdPut</a>
-                    </li>
-                    <li data-group="Default" data-name="usersPost" class="">
-                      <a href="#api-Default-usersPost">usersPost</a>
-                    </li>
-                    <li data-group="Default" data-name="webjarsGet" class="">
-                      <a href="#api-Default-webjarsGet">webjarsGet</a>
+                    <li data-group="Default" data-name="registerPost" class="">
+                      <a href="#api-Default-registerPost">registerPost</a>
                     </li>
           </ul>
         </nav>
@@ -749,7 +741,7 @@
       <div id="content">
         <div id="project">
           <div class="pull-left">
-            <h1>ktor_example API</h1>
+            <h1>account_manager API</h1>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -758,7 +750,7 @@
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
               <div class="app-desc">Version: 1.0.0</div>
             <hr>
-            <div>ktor_example API</div>
+            <div>account_manager API</div>
           </div>
         </div>
         <div id="sections">
@@ -798,7 +790,7 @@
                           <div class="tab-pane active" id="examples-Default-jsonKotlinxSerializationGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: */*"\
-"https://ktor_example/json/kotlinx-serialization"</code></pre>
+"//json/kotlinx-serialization"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Default-jsonKotlinxSerializationGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -863,9 +855,9 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Default-jsonKotlinxSerializationGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var KtorExampleApi = require('ktor_example_api');
+                              <pre class="prettyprint"><code class="language-js">var AccountManagerApi = require('account_manager_api');
 
-var api = new KtorExampleApi.DefaultApi()
+var api = new AccountManagerApi.DefaultApi()
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1019,10 +1011,10 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Default-rootGet">
-                      <article id="api-Default-rootGet-0" data-group="User" data-name="rootGet" data-version="0">
+                    <div id="api-Default-loginPost">
+                      <article id="api-Default-loginPost-0" data-group="User" data-name="loginPost" data-version="0">
                         <div class="pull-left">
-                          <h1>rootGet</h1>
+                          <h1>loginPost</h1>
                           <p></p>
                         </div>
                         <div class="pull-right"></div>
@@ -1031,1646 +1023,31 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/login</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-rootGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-rootGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-rootGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-rootGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-rootGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-rootGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-rootGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-rootGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-rootGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-rootGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-rootGet-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Default-loginPost-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-loginPost-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-loginPost-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-loginPost-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-loginPost-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-loginPost-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-loginPost-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-loginPost-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-loginPost-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-loginPost-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-loginPost-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-rootGet-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: text/plain"\
-"https://ktor_example/"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Default-rootGet-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.DefaultApi;
-
-import java.io.File;
-import java.util.*;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        
-        DefaultApi apiInstance = new DefaultApi();
-        try {
-            apiInstance.rootGet();
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#rootGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Default-rootGet-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        DefaultApi apiInstance = new DefaultApi();
-        try {
-            apiInstance.rootGet();
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#rootGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Default-rootGet-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Default-rootGet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
-DefaultApi *apiInstance = [[DefaultApi alloc] init];
-
-[apiInstance rootGetWithCompletionHandler: 
-              ^(NSError* error) {
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-rootGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var KtorExampleApi = require('ktor_example_api');
-
-var api = new KtorExampleApi.DefaultApi()
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
-};
-api.rootGet(callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Default-rootGet-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Default-rootGet-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class rootGetExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new DefaultApi();
-
-            try
-            {
-                apiInstance.rootGet();
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling DefaultApi.rootGet: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-rootGet-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiDefaultApi();
-
-try {
-    $api_instance->rootGet();
-} catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->rootGet: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-rootGet-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::DefaultApi;
-
-my $api_instance = WWW::SwaggerClient::DefaultApi->new();
-
-eval { 
-    $api_instance->rootGet();
-};
-if ($@) {
-    warn "Exception when calling DefaultApi->rootGet: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-rootGet-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.DefaultApi()
-
-try: 
-    api_instance.root_get()
-except ApiException as e:
-    print("Exception when calling DefaultApi->rootGet: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-
-
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 200 - OK </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-rootGet-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-rootGet-200-schema">
-                                  <div id='responses-rootGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "OK",
-  "content" : {
-    "text/plain" : {
-      "schema" : {
-        "x-content-type" : "text/plain"
-      },
-      "examples" : {
-        "Example#1" : {
-          "value" : "Hello World!"
-        }
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["text/plain"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-rootGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-rootGet-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-rootGet-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                    <div id="api-Default-testGet">
-                      <article id="api-Default-testGet-0" data-group="User" data-name="testGet" data-version="0">
-                        <div class="pull-left">
-                          <h1>testGet</h1>
-                          <p></p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked"></p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/test</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-testGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-testGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-testGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-testGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-testGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-testGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-testGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-testGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-testGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-testGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-testGet-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-testGet-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: text/plain"\
-"https://ktor_example/test"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Default-testGet-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.DefaultApi;
-
-import java.io.File;
-import java.util.*;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        
-        DefaultApi apiInstance = new DefaultApi();
-        try {
-            apiInstance.testGet();
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#testGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Default-testGet-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        DefaultApi apiInstance = new DefaultApi();
-        try {
-            apiInstance.testGet();
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#testGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Default-testGet-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Default-testGet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
-DefaultApi *apiInstance = [[DefaultApi alloc] init];
-
-[apiInstance testGetWithCompletionHandler: 
-              ^(NSError* error) {
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-testGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var KtorExampleApi = require('ktor_example_api');
-
-var api = new KtorExampleApi.DefaultApi()
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
-};
-api.testGet(callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Default-testGet-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Default-testGet-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class testGetExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new DefaultApi();
-
-            try
-            {
-                apiInstance.testGet();
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling DefaultApi.testGet: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-testGet-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiDefaultApi();
-
-try {
-    $api_instance->testGet();
-} catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->testGet: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-testGet-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::DefaultApi;
-
-my $api_instance = WWW::SwaggerClient::DefaultApi->new();
-
-eval { 
-    $api_instance->testGet();
-};
-if ($@) {
-    warn "Exception when calling DefaultApi->testGet: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-testGet-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.DefaultApi()
-
-try: 
-    api_instance.test_get()
-except ApiException as e:
-    print("Exception when calling DefaultApi->testGet: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-
-
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 200 - OK </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-testGet-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-testGet-200-schema">
-                                  <div id='responses-testGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "OK",
-  "content" : {
-    "text/plain" : {
-      "schema" : {
-        "x-content-type" : "text/plain"
-      },
-      "examples" : {
-        "Example#1" : {
-          "value" : "test"
-        }
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["text/plain"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-testGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-testGet-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-testGet-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                    <div id="api-Default-usersIdDelete">
-                      <article id="api-Default-usersIdDelete-0" data-group="User" data-name="usersIdDelete" data-version="0">
-                        <div class="pull-left">
-                          <h1>usersIdDelete</h1>
-                          <p></p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked">Delete user</p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/users/{id}</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-usersIdDelete-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-usersIdDelete-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-usersIdDelete-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-usersIdDelete-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-usersIdDelete-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-usersIdDelete-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-usersIdDelete-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-usersIdDelete-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-usersIdDelete-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-usersIdDelete-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-usersIdDelete-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-usersIdDelete-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
--H "Accept: text/plain,*/*"\
-"https://ktor_example/users/{id}"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Default-usersIdDelete-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.DefaultApi;
-
-import java.io.File;
-import java.util.*;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        
-        DefaultApi apiInstance = new DefaultApi();
-         id = ; //  | 
-        try {
-            apiInstance.usersIdDelete(id);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#usersIdDelete");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Default-usersIdDelete-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        DefaultApi apiInstance = new DefaultApi();
-         id = ; //  | 
-        try {
-            apiInstance.usersIdDelete(id);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#usersIdDelete");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Default-usersIdDelete-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Default-usersIdDelete-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp"> *id = ; // 
-
-DefaultApi *apiInstance = [[DefaultApi alloc] init];
-
-[apiInstance usersIdDeleteWith:id
-              completionHandler: ^(NSError* error) {
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-usersIdDelete-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var KtorExampleApi = require('ktor_example_api');
-
-var api = new KtorExampleApi.DefaultApi()
-var id = ; // {{}} 
-
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
-};
-api.usersIdDelete(id, callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Default-usersIdDelete-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Default-usersIdDelete-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class usersIdDeleteExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new DefaultApi();
-            var id = new (); //  | 
-
-            try
-            {
-                apiInstance.usersIdDelete(id);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling DefaultApi.usersIdDelete: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-usersIdDelete-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiDefaultApi();
-$id = ; //  | 
-
-try {
-    $api_instance->usersIdDelete($id);
-} catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->usersIdDelete: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-usersIdDelete-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::DefaultApi;
-
-my $api_instance = WWW::SwaggerClient::DefaultApi->new();
-my $id = ; #  | 
-
-eval { 
-    $api_instance->usersIdDelete(id => $id);
-};
-if ($@) {
-    warn "Exception when calling DefaultApi->usersIdDelete: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-usersIdDelete-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.DefaultApi()
-id =  #  | 
-
-try: 
-    api_instance.users_id_delete(id)
-except ApiException as e:
-    print("Exception when calling DefaultApi->usersIdDelete: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">id*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_usersIdDelete_id">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
-
-
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 500 - Internal Server Error </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-usersIdDelete-500-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-usersIdDelete-500-schema">
-                                  <div id='responses-usersIdDelete-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Internal Server Error",
-  "content" : {
-    "text/plain" : {
-      "schema" : {
-        "x-content-type" : "text/plain"
-      },
-      "examples" : {
-        "Example#1" : {
-          "value" : ""
-        }
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["text/plain"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-usersIdDelete-500-schema-data').val(stringify(schema));
-                                        var result = $('#responses-usersIdDelete-500-schema-500');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-usersIdDelete-500-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                            <h3> Status: 200 - OK </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-usersIdDelete-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-usersIdDelete-200-schema">
-                                  <div id='responses-usersIdDelete-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "OK",
-  "content" : {
-    "*/*" : {
-      "schema" : {
-        "x-content-type" : "*/*"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["*/*"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-usersIdDelete-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-usersIdDelete-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-usersIdDelete-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                    <div id="api-Default-usersIdGet">
-                      <article id="api-Default-usersIdGet-0" data-group="User" data-name="usersIdGet" data-version="0">
-                        <div class="pull-left">
-                          <h1>usersIdGet</h1>
-                          <p></p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked">Read user</p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/users/{id}</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-usersIdGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-usersIdGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-usersIdGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-usersIdGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-usersIdGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-usersIdGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-usersIdGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-usersIdGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-usersIdGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-usersIdGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-usersIdGet-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-usersIdGet-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: text/plain,*/*"\
-"https://ktor_example/users/{id}"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Default-usersIdGet-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.DefaultApi;
-
-import java.io.File;
-import java.util.*;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        
-        DefaultApi apiInstance = new DefaultApi();
-         id = ; //  | 
-        try {
-            ExposedUser result = apiInstance.usersIdGet(id);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#usersIdGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Default-usersIdGet-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        DefaultApi apiInstance = new DefaultApi();
-         id = ; //  | 
-        try {
-            ExposedUser result = apiInstance.usersIdGet(id);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#usersIdGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Default-usersIdGet-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Default-usersIdGet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp"> *id = ; // 
-
-DefaultApi *apiInstance = [[DefaultApi alloc] init];
-
-[apiInstance usersIdGetWith:id
-              completionHandler: ^(ExposedUser output, NSError* error) {
-                            if (output) {
-                                NSLog(@"%@", output);
-                            }
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-usersIdGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var KtorExampleApi = require('ktor_example_api');
-
-var api = new KtorExampleApi.DefaultApi()
-var id = ; // {{}} 
-
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.usersIdGet(id, callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Default-usersIdGet-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Default-usersIdGet-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class usersIdGetExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new DefaultApi();
-            var id = new (); //  | 
-
-            try
-            {
-                ExposedUser result = apiInstance.usersIdGet(id);
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling DefaultApi.usersIdGet: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-usersIdGet-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiDefaultApi();
-$id = ; //  | 
-
-try {
-    $result = $api_instance->usersIdGet($id);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->usersIdGet: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-usersIdGet-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::DefaultApi;
-
-my $api_instance = WWW::SwaggerClient::DefaultApi->new();
-my $id = ; #  | 
-
-eval { 
-    my $result = $api_instance->usersIdGet(id => $id);
-    print Dumper($result);
-};
-if ($@) {
-    warn "Exception when calling DefaultApi->usersIdGet: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-usersIdGet-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.DefaultApi()
-id =  #  | 
-
-try: 
-    api_response = api_instance.users_id_get(id)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling DefaultApi->usersIdGet: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">id*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_usersIdGet_id">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
-
-
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 500 - Internal Server Error </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-usersIdGet-500-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-usersIdGet-500-schema">
-                                  <div id='responses-usersIdGet-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Internal Server Error",
-  "content" : {
-    "text/plain" : {
-      "schema" : {
-        "x-content-type" : "text/plain"
-      },
-      "examples" : {
-        "Example#1" : {
-          "value" : ""
-        }
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["text/plain"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-usersIdGet-500-schema-data').val(stringify(schema));
-                                        var result = $('#responses-usersIdGet-500-schema-500');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-usersIdGet-500-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                            <h3> Status: 200 - OK </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-usersIdGet-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-usersIdGet-200-schema">
-                                  <div id='responses-usersIdGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "OK",
-  "content" : {
-    "*/*" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/ExposedUser"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["*/*"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-usersIdGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-usersIdGet-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-usersIdGet-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                            <h3> Status: 404 - Not Found </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-usersIdGet-404-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-usersIdGet-404-schema">
-                                  <div id='responses-usersIdGet-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Not Found",
-  "content" : {
-    "*/*" : {
-      "schema" : {
-        "x-content-type" : "*/*"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["*/*"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-usersIdGet-404-schema-data').val(stringify(schema));
-                                        var result = $('#responses-usersIdGet-404-schema-404');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-usersIdGet-404-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                    <div id="api-Default-usersIdPut">
-                      <article id="api-Default-usersIdPut-0" data-group="User" data-name="usersIdPut" data-version="0">
-                        <div class="pull-left">
-                          <h1>usersIdPut</h1>
-                          <p></p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked">Update user</p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/users/{id}</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-usersIdPut-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-usersIdPut-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-usersIdPut-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-usersIdPut-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-usersIdPut-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-usersIdPut-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-usersIdPut-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-usersIdPut-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-usersIdPut-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-usersIdPut-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-usersIdPut-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-usersIdPut-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
--H "Accept: text/plain,*/*"\
--H "Content-Type: application/json"\
-"https://ktor_example/users/{id}"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Default-usersIdPut-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.DefaultApi;
-
-import java.io.File;
-import java.util.*;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        
-        DefaultApi apiInstance = new DefaultApi();
-        ExposedUser body = ; // ExposedUser | 
-         id = ; //  | 
-        try {
-            apiInstance.usersIdPut(body, id);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#usersIdPut");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Default-usersIdPut-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        DefaultApi apiInstance = new DefaultApi();
-        ExposedUser body = ; // ExposedUser | 
-         id = ; //  | 
-        try {
-            apiInstance.usersIdPut(body, id);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#usersIdPut");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Default-usersIdPut-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Default-usersIdPut-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">ExposedUser *body = ; // 
- *id = ; // 
-
-DefaultApi *apiInstance = [[DefaultApi alloc] init];
-
-[apiInstance usersIdPutWith:body
-    id:id
-              completionHandler: ^(NSError* error) {
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-usersIdPut-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var KtorExampleApi = require('ktor_example_api');
-
-var api = new KtorExampleApi.DefaultApi()
-var body = ; // {{ExposedUser}} 
-var id = ; // {{}} 
-
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
-};
-api.usersIdPut(bodyid, callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Default-usersIdPut-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Default-usersIdPut-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class usersIdPutExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new DefaultApi();
-            var body = new ExposedUser(); // ExposedUser | 
-            var id = new (); //  | 
-
-            try
-            {
-                apiInstance.usersIdPut(body, id);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling DefaultApi.usersIdPut: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-usersIdPut-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiDefaultApi();
-$body = ; // ExposedUser | 
-$id = ; //  | 
-
-try {
-    $api_instance->usersIdPut($body, $id);
-} catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->usersIdPut: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-usersIdPut-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::DefaultApi;
-
-my $api_instance = WWW::SwaggerClient::DefaultApi->new();
-my $body = WWW::SwaggerClient::Object::ExposedUser->new(); # ExposedUser | 
-my $id = ; #  | 
-
-eval { 
-    $api_instance->usersIdPut(body => $body, id => $id);
-};
-if ($@) {
-    warn "Exception when calling DefaultApi->usersIdPut: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-usersIdPut-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.DefaultApi()
-body =  # ExposedUser | 
-id =  #  | 
-
-try: 
-    api_instance.users_id_put(body, id)
-except ApiException as e:
-    print("Exception when calling DefaultApi->usersIdPut: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">id*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_usersIdPut_id">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
-
-
-                            <div class="methodsubtabletitle">Body parameters</div>
-                            <table id="methodsubtable">
-                              <tr>
-                                <th width="150px">Name</th>
-                                <th>Description</th>
-                              </tr>
-                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
-                                <td>
-                                
-                                
-                                <script>
-                                $(document).ready(function() {
-                                  var schemaWrapper = {
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/ExposedUser"
-      }
-    }
-  },
-  "required" : true
-};
-                                  var schema = schemaWrapper.content["application/json"].schema;
-                                  if (schema.$ref != null) {
-                                    schema = defsParser.$refs.get(schema.$ref);
-                                  } else {
-                                    schemaWrapper.components = {};
-                                    schemaWrapper.components.schemas = Object.assign({}, defs);
-                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                      console.log(err);
-                                    });
-                                  }
-                                
-                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
-                                  var result = $('#d2e199_usersIdPut_body');
-                                  result.empty();
-                                  result.append(view.render());
-                                });
-                                </script>
-                                <div id="d2e199_usersIdPut_body"></div>
-                                </td>
-                                </tr>
-                            </table>
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 500 - Internal Server Error </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-usersIdPut-500-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-usersIdPut-500-schema">
-                                  <div id='responses-usersIdPut-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Internal Server Error",
-  "content" : {
-    "text/plain" : {
-      "schema" : {
-        "x-content-type" : "text/plain"
-      },
-      "examples" : {
-        "Example#1" : {
-          "value" : ""
-        }
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["text/plain"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-usersIdPut-500-schema-data').val(stringify(schema));
-                                        var result = $('#responses-usersIdPut-500-schema-500');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-usersIdPut-500-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                            <h3> Status: 200 - OK </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-usersIdPut-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-usersIdPut-200-schema">
-                                  <div id='responses-usersIdPut-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "OK",
-  "content" : {
-    "*/*" : {
-      "schema" : {
-        "x-content-type" : "*/*"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["*/*"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-usersIdPut-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-usersIdPut-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-usersIdPut-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                    <div id="api-Default-usersPost">
-                      <article id="api-Default-usersPost-0" data-group="User" data-name="usersPost" data-version="0">
-                        <div class="pull-left">
-                          <h1>usersPost</h1>
-                          <p></p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked">Create user</p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/users</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-usersPost-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-usersPost-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-usersPost-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-usersPost-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-usersPost-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-usersPost-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-usersPost-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-usersPost-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-usersPost-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-usersPost-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-usersPost-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-usersPost-0-curl">
+                          <div class="tab-pane active" id="examples-Default-loginPost-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
--H "Accept: */*"\
 -H "Content-Type: application/json"\
-"https://ktor_example/users"</code></pre>
+"//login"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Default-usersPost-0-java">
+                          <div class="tab-pane" id="examples-Default-loginPost-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -2684,44 +1061,44 @@ public class DefaultApiExample {
     public static void main(String[] args) {
         
         DefaultApi apiInstance = new DefaultApi();
-        ExposedUser body = ; // ExposedUser | 
+        LoginUserDto body = ; // LoginUserDto | 
         try {
-            apiInstance.usersPost(body);
+            apiInstance.loginPost(body);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#usersPost");
+            System.err.println("Exception when calling DefaultApi#loginPost");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-usersPost-0-android">
+                          <div class="tab-pane" id="examples-Default-loginPost-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
 
 public class DefaultApiExample {
 
     public static void main(String[] args) {
         DefaultApi apiInstance = new DefaultApi();
-        ExposedUser body = ; // ExposedUser | 
+        LoginUserDto body = ; // LoginUserDto | 
         try {
-            apiInstance.usersPost(body);
+            apiInstance.loginPost(body);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#usersPost");
+            System.err.println("Exception when calling DefaultApi#loginPost");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Default-usersPost-0-groovy">
+  <div class="tab-pane" id="examples-Default-loginPost-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Default-usersPost-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">ExposedUser *body = ; // 
+                            <div class="tab-pane" id="examples-Default-loginPost-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">LoginUserDto *body = ; // 
 
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
-[apiInstance usersPostWith:body
+[apiInstance loginPostWith:body
               completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
@@ -2730,11 +1107,11 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-usersPost-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var KtorExampleApi = require('ktor_example_api');
+                            <div class="tab-pane" id="examples-Default-loginPost-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var AccountManagerApi = require('account_manager_api');
 
-var api = new KtorExampleApi.DefaultApi()
-var body = ; // {{ExposedUser}} 
+var api = new AccountManagerApi.DefaultApi()
+var body = ; // {{LoginUserDto}} 
 
 var callback = function(error, data, response) {
   if (error) {
@@ -2743,14 +1120,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.usersPost(body, callback);
+api.loginPost(body, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Default-usersPost-0-angular">
+                            <!--<div class="tab-pane" id="examples-Default-loginPost-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Default-usersPost-0-csharp">
+                            <div class="tab-pane" id="examples-Default-loginPost-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -2759,21 +1136,21 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class usersPostExample
+    public class loginPostExample
     {
         public void main()
         {
 
             var apiInstance = new DefaultApi();
-            var body = new ExposedUser(); // ExposedUser | 
+            var body = new LoginUserDto(); // LoginUserDto | 
 
             try
             {
-                apiInstance.usersPost(body);
+                apiInstance.loginPost(body);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.usersPost: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.loginPost: " + e.Message );
             }
         }
     }
@@ -2781,38 +1158,38 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-usersPost-0-php">
+                            <div class="tab-pane" id="examples-Default-loginPost-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiDefaultApi();
-$body = ; // ExposedUser | 
+$body = ; // LoginUserDto | 
 
 try {
-    $api_instance->usersPost($body);
+    $api_instance->loginPost($body);
 } catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->usersPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DefaultApi->loginPost: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-usersPost-0-perl">
+                            <div class="tab-pane" id="examples-Default-loginPost-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::DefaultApi;
 
 my $api_instance = WWW::SwaggerClient::DefaultApi->new();
-my $body = WWW::SwaggerClient::Object::ExposedUser->new(); # ExposedUser | 
+my $body = WWW::SwaggerClient::Object::LoginUserDto->new(); # LoginUserDto | 
 
 eval { 
-    $api_instance->usersPost(body => $body);
+    $api_instance->loginPost(body => $body);
 };
 if ($@) {
-    warn "Exception when calling DefaultApi->usersPost: $@\n";
+    warn "Exception when calling DefaultApi->loginPost: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-usersPost-0-python">
+                            <div class="tab-pane" id="examples-Default-loginPost-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -2821,12 +1198,12 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.DefaultApi()
-body =  # ExposedUser | 
+body =  # LoginUserDto | 
 
 try: 
-    api_instance.users_post(body)
+    api_instance.login_post(body)
 except ApiException as e:
-    print("Exception when calling DefaultApi->usersPost: %s\n" % e)</code></pre>
+    print("Exception when calling DefaultApi->loginPost: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -2850,7 +1227,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/ExposedUser"
+        "$ref" : "#/components/schemas/LoginUserDto"
       }
     }
   },
@@ -2868,12 +1245,12 @@ except ApiException as e:
                                   }
                                 
                                   var view = new JSONSchemaView(schema,2,{isBodyParam: true});
-                                  var result = $('#d2e199_usersPost_body');
+                                  var result = $('#d2e199_loginPost_body');
                                   result.empty();
                                   result.append(view.render());
                                 });
                                 </script>
-                                <div id="d2e199_usersPost_body"></div>
+                                <div id="d2e199_loginPost_body"></div>
                                 </td>
                                 </tr>
                             </table>
@@ -2881,62 +1258,13 @@ except ApiException as e:
 
 
                           <h2>Responses</h2>
-                            <h3> Status: 201 - Created </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-usersPost-201-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-usersPost-201-schema">
-                                  <div id='responses-usersPost-201-schema-201' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Created",
-  "content" : {
-    "*/*" : {
-      "schema" : {
-        "format" : "int32",
-        "x-content-type" : "*/*"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["*/*"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-usersPost-201-schema-data').val(stringify(schema));
-                                        var result = $('#responses-usersPost-201-schema-201');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-usersPost-201-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Default-webjarsGet">
-                      <article id="api-Default-webjarsGet-0" data-group="User" data-name="webjarsGet" data-version="0">
+                    <div id="api-Default-registerPost">
+                      <article id="api-Default-registerPost-0" data-group="User" data-name="registerPost" data-version="0">
                         <div class="pull-left">
-                          <h1>webjarsGet</h1>
+                          <h1>registerPost</h1>
                           <p></p>
                         </div>
                         <div class="pull-right"></div>
@@ -2945,31 +1273,31 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/webjars</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/register</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-webjarsGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-webjarsGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-webjarsGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-webjarsGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-webjarsGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-webjarsGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-webjarsGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-webjarsGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-webjarsGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-webjarsGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-webjarsGet-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Default-registerPost-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-registerPost-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-registerPost-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-registerPost-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-registerPost-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-registerPost-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-registerPost-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-registerPost-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-registerPost-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-registerPost-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-registerPost-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-webjarsGet-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: text/html"\
-"https://ktor_example/webjars"</code></pre>
+                          <div class="tab-pane active" id="examples-Default-registerPost-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Content-Type: application/json"\
+"//register"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Default-webjarsGet-0-java">
+                          <div class="tab-pane" id="examples-Default-registerPost-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -2983,42 +1311,45 @@ public class DefaultApiExample {
     public static void main(String[] args) {
         
         DefaultApi apiInstance = new DefaultApi();
+        RegisterUserDto body = ; // RegisterUserDto | 
         try {
-            apiInstance.webjarsGet();
+            apiInstance.registerPost(body);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#webjarsGet");
+            System.err.println("Exception when calling DefaultApi#registerPost");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-webjarsGet-0-android">
+                          <div class="tab-pane" id="examples-Default-registerPost-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
 
 public class DefaultApiExample {
 
     public static void main(String[] args) {
         DefaultApi apiInstance = new DefaultApi();
+        RegisterUserDto body = ; // RegisterUserDto | 
         try {
-            apiInstance.webjarsGet();
+            apiInstance.registerPost(body);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#webjarsGet");
+            System.err.println("Exception when calling DefaultApi#registerPost");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Default-webjarsGet-0-groovy">
+  <div class="tab-pane" id="examples-Default-registerPost-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Default-webjarsGet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
+                            <div class="tab-pane" id="examples-Default-registerPost-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">RegisterUserDto *body = ; // 
+
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
-[apiInstance webjarsGetWithCompletionHandler: 
-              ^(NSError* error) {
+[apiInstance registerPostWith:body
+              completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -3026,10 +1357,12 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-webjarsGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var KtorExampleApi = require('ktor_example_api');
+                            <div class="tab-pane" id="examples-Default-registerPost-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var AccountManagerApi = require('account_manager_api');
 
-var api = new KtorExampleApi.DefaultApi()
+var api = new AccountManagerApi.DefaultApi()
+var body = ; // {{RegisterUserDto}} 
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -3037,14 +1370,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.webjarsGet(callback);
+api.registerPost(body, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Default-webjarsGet-0-angular">
+                            <!--<div class="tab-pane" id="examples-Default-registerPost-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Default-webjarsGet-0-csharp">
+                            <div class="tab-pane" id="examples-Default-registerPost-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -3053,20 +1386,21 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class webjarsGetExample
+    public class registerPostExample
     {
         public void main()
         {
 
             var apiInstance = new DefaultApi();
+            var body = new RegisterUserDto(); // RegisterUserDto | 
 
             try
             {
-                apiInstance.webjarsGet();
+                apiInstance.registerPost(body);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.webjarsGet: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.registerPost: " + e.Message );
             }
         }
     }
@@ -3074,36 +1408,38 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-webjarsGet-0-php">
+                            <div class="tab-pane" id="examples-Default-registerPost-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiDefaultApi();
+$body = ; // RegisterUserDto | 
 
 try {
-    $api_instance->webjarsGet();
+    $api_instance->registerPost($body);
 } catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->webjarsGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DefaultApi->registerPost: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-webjarsGet-0-perl">
+                            <div class="tab-pane" id="examples-Default-registerPost-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::DefaultApi;
 
 my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $body = WWW::SwaggerClient::Object::RegisterUserDto->new(); # RegisterUserDto | 
 
 eval { 
-    $api_instance->webjarsGet();
+    $api_instance->registerPost(body => $body);
 };
 if ($@) {
-    warn "Exception when calling DefaultApi->webjarsGet: $@\n";
+    warn "Exception when calling DefaultApi->registerPost: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-webjarsGet-0-python">
+                            <div class="tab-pane" id="examples-Default-registerPost-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -3112,11 +1448,12 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.DefaultApi()
+body =  # RegisterUserDto | 
 
 try: 
-    api_instance.webjars_get()
+    api_instance.register_post(body)
 except ApiException as e:
-    print("Exception when calling DefaultApi->webjarsGet: %s\n" % e)</code></pre>
+    print("Exception when calling DefaultApi->registerPost: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -3124,63 +1461,53 @@ except ApiException as e:
 
 
 
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/RegisterUserDto"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_registerPost_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_registerPost_body"></div>
+                                </td>
+                                </tr>
+                            </table>
 
 
 
                           <h2>Responses</h2>
-                            <h3> Status: 200 - OK </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-webjarsGet-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-webjarsGet-200-schema">
-                                  <div id='responses-webjarsGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "OK",
-  "content" : {
-    "text/html" : {
-      "schema" : {
-        "x-content-type" : "text/html"
-      },
-      "examples" : {
-        "Example#1" : {
-          "value" : "<script src='/webjars/jquery/jquery.js'></script>"
-        }
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["text/html"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-webjarsGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-webjarsGet-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-webjarsGet-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
                         </article>
                       </div>
                       <hr>

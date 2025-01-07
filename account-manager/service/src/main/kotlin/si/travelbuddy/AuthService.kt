@@ -17,6 +17,9 @@ import javax.crypto.spec.PBEKeySpec
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
+import si.travelbuddy.dto.LoginUserDto
+import si.travelbuddy.dto.UserDto
+import java.time.ZoneOffset
 
 // TODO: change into environment variables
 private const val ALGORITHM = "PBKDF2WithHmacSHA512"
@@ -25,9 +28,6 @@ private const val KEY_LENGTH = 256
 private const val SECRET = "TravelBuddySecret"
 
 class AuthService(private val dataBase: Database) {
-
-
-
     init {
         transaction {
             SchemaUtils.create(UserTable)
@@ -38,27 +38,31 @@ class AuthService(private val dataBase: Database) {
     private suspend fun <T> dbQuery(block: suspend () -> T): T =
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
-    public suspend fun register(user: RegisterUserDto) = transaction {
-        var salt = generateRandomSalt().toHexString()
-        val user = UserDao.new {
-            this.username = user.username
-            this.name = user.name
-            this.surname = user.surname
-            this.passwordHash = generateHash(user.password, salt)
-            this.passwordSalt = salt
-            this.created = user.created.toInstant()
-        }.toUser()
-
+    public suspend fun register(user: RegisterUserDto): User? = transaction {
+        val test = UserDao.find { UserTable.username eq user.username }.singleOrNull()
+        if (test == null) {
+            var salt = generateRandomSalt().toHexString()
+            return@transaction UserDao.new {
+                this.username = user.username
+                this.name = user.name
+                this.surname = user.surname
+                this.passwordHash = generateHash(user.password, salt)
+                this.passwordSalt = salt
+                this.created = java.time.ZonedDateTime.now(ZoneOffset.UTC).toInstant()
+            }.toModel()
+        }
+        return@transaction null
     }
 
-    fun login(user: loginUserDto) : Unit = transaction {
-        val token = JWT.create()
-            .withAudience(audience)
-            .withIssuer(issuer)
-            .withClaim("username", user.username)
-            .withExpiresAt(Date(System.currentTimeMillis() + 60000))
-            .sign(Algorithm.HMAC256(secret))
-
+    public suspend fun login(loginUser: LoginUserDto): User? = dbQuery {
+        val user = UserDao.find { UserTable.username eq loginUser.username }.singleOrNull()
+        if (user != null) {
+            val passwordHash = generateHash(loginUser.password, user.passwordSalt)
+            if (passwordHash == user.passwordHash) {
+                return@dbQuery user.toModel()
+            }
+        }
+        return@dbQuery null
     }
 
     suspend fun updatePassword(user: UpdateUserPasswordDto) = dbQuery {

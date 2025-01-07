@@ -1,24 +1,29 @@
 package si.travelbuddy
 
+import io.ktor.http.HttpStatusCode
 import io.ktor.resources.*
 import io.ktor.server.request.receive
+import io.ktor.server.response.respond
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.post
+import org.jetbrains.exposed.sql.transactions.transaction
+import si.travelbuddy.dto.LoginUserDto
 import si.travelbuddy.dto.RegisterUserDto
 
-@Resource("/register")
-class RegisterResource () {}
-@Resource("/login")
-class LoginResource () {}
+fun Route.auth(authService: AuthService) {
+    post("/register") {
+        val userDto = call.receive<RegisterUserDto>()
+        val user = authService.register(userDto)
 
-fun Route.auth(service: AuthService) {
-    post<RegisterResource> {
-        val user = call.receive<RegisterUserDto>()
-        call.respondText(service.create(user).toString())
+        if (user != null) call.respond(HttpStatusCode.OK, message = user)
+        else call.respond(HttpStatusCode.Forbidden, message = "Invalid user data")
     }
 
-    post<LoginResource> {
-//        val user = call.receive<>()
+    post("/login") {
+        val userDto = call.receive<LoginUserDto>()
+        val user = authService.login(userDto)
+        if (user != null) call.respond(HttpStatusCode.OK, message = user)
+        else call.respond(HttpStatusCode.Forbidden, message = "Incorrect credentials")
     }
 }

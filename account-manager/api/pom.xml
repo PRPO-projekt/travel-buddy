@@ -136,6 +136,11 @@
             <version>${swagger_codegen_version}</version>
         </dependency>
         <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.2</version>
+        </dependency>
+        <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-server-auth-jvm</artifactId>
             <version>${ktor_version}</version>
@@ -145,6 +150,7 @@
             <artifactId>ktor-server-auth-jwt-jvm</artifactId>
             <version>${ktor_version}</version>
         </dependency>
+
         <dependency>
             <groupId>si.travelbuddy</groupId>
             <artifactId>service</artifactId>

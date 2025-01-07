@@ -3,9 +3,7 @@ package si.travelbuddy
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import io.swagger.io.Authentication
 import si.travelbuddy.plugins.*
-import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 
@@ -22,13 +20,3 @@ fun Application.module() {
     configureRouting()
 }
 
-fun Application.configureSecurity() {
-    install(Authentication) {
-        jwt {
-            val secret = this@configureSecurity.environment.config.property("jwt.secret").getString()
-            val issuer = this@configureSecurity.environment.config.property("jwt.issuer").getString()
-            val audience = this@configureSecurity.environment.config.property("jwt.audience").getString()
-            val myRealm = this@configureSecurity.environment.config.property("jwt.realm").getString()
-        }
-    }
-}
