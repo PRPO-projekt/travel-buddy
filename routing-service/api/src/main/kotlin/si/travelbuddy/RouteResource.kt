@@ -21,7 +21,9 @@ class RouteResource(
     /* Arriving station id */
     val toId: String,
     /* Departure time */
-    val depTime: String
+    val depTime: String,
+    /* Semicolon separated coords */
+    val intermediateStops: String = ""
 ) {
 
 }
@@ -45,7 +47,9 @@ fun findStopCoord(id: String): Pair<Double, Double> {
         .build()
 
     return client.newCall(request).execute().use { response ->
-        if (!response.isSuccessful) throw IOException("Unexpected code $response")
+        if (!response.isSuccessful) {
+            throw IOException("Unexpected code $response")
+        }
 
         val obj = Json.decodeFromString<Stop>(response.body!!.string())
 
@@ -53,20 +57,31 @@ fun findStopCoord(id: String): Pair<Double, Double> {
     }
 }
 
-fun getItinerary(from: Pair<Double, Double>, to: Pair<Double, Double>, depTime: LocalDateTime): JsonElement? {
+fun getItinerary(
+    from: Pair<Double, Double>,
+    to: Pair<Double, Double>,
+    depTime: LocalDateTime,
+    intermediateStops: List<Pair<Double, Double>>
+): JsonElement? {
+    val intermediate = intermediateStops.map {
+        it.first.toString() + "," + it.second.toString()
+    }.joinToString(";")
+
     val request = Request.Builder()
-        .url(ncupApiEndpoint +
-                "?fromPlace=${from.first},${from.second}" +
-                "&toPlace=${to.first},${to.second}" +
-                "&mode=WALK,BUS,RAIL,TRAM" +
-                "&endmode=WALK&maxWalkDistance=800&maxWalkDistanceEnd=800&walkSpeed=1.389" +
-                "&wheelchair=false" +
-                "&showIntermediateStops=true" +
-                "&date=${depTime.year}-${depTime.monthValue}-${depTime.dayOfMonth}" +
-                "&time=${depTime.hour}:${depTime.minute}" +
-                "&arriveBy=false" +
-                "&additionalmodes=" +
-                "&intermediatePlaces=")
+        .url(
+            ncupApiEndpoint +
+                    "?fromPlace=${from.first},${from.second}" +
+                    "&toPlace=${to.first},${to.second}" +
+                    "&mode=WALK,BUS,RAIL,TRAM" +
+                    "&endmode=WALK&maxWalkDistance=800&maxWalkDistanceEnd=800&walkSpeed=1.389" +
+                    "&wheelchair=false" +
+                    "&showIntermediateStops=true" +
+                    "&date=${depTime.year}-${depTime.monthValue}-${depTime.dayOfMonth}" +
+                    "&time=${depTime.hour}:${depTime.minute}" +
+                    "&arriveBy=false" +
+                    "&additionalmodes=" +
+                    "&intermediatePlaces=${intermediate}"
+        )
         .build()
 
     return client.newCall(request).execute().use { response ->
@@ -85,7 +100,13 @@ fun Route.stops() {
         val fromCoords = findStopCoord(route.fromId)
         val toCoords = findStopCoord(route.toId)
 
-        val obj = getItinerary(fromCoords, toCoords, LocalDateTime.parse(route.depTime))
+        val intermediateStops = route.intermediateStops.split(";")
+            .filter { it.isNotEmpty() }
+            .map {
+                findStopCoord(it)
+            }
+
+        val obj = getItinerary(fromCoords, toCoords, LocalDateTime.parse(route.depTime), intermediateStops)
 
         call.respond(HttpStatusCode.OK, obj.toString())
     }
