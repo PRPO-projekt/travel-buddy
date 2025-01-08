@@ -6,8 +6,7 @@ import io.ktor.server.routing.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.*
 import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -54,7 +53,7 @@ fun findStopCoord(id: String): Pair<Double, Double> {
     }
 }
 
-fun getItinerary(from: Pair<Double, Double>, to: Pair<Double, Double>, depTime: LocalDateTime): JsonElement {
+fun getItinerary(from: Pair<Double, Double>, to: Pair<Double, Double>, depTime: LocalDateTime): JsonElement? {
     val request = Request.Builder()
         .url(ncupApiEndpoint +
                 "?fromPlace=${from.first},${from.second}" +
@@ -75,7 +74,9 @@ fun getItinerary(from: Pair<Double, Double>, to: Pair<Double, Double>, depTime: 
 
         val obj = Json.parseToJsonElement(response.body!!.string())
 
-        return@use obj
+        return@use obj.jsonObject["PrimaryTrip"]
+            ?.jsonObject?.get("Itineraries")
+            ?.jsonArray?.get(0)
     }
 }
 
