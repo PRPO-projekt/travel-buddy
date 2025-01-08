@@ -8,8 +8,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import si.travelbuddy.dto.poiDto
-import si.travelbuddy.entity.poiDao
-
+import si.travelbuddy.entity.*
 
 @Resource("/pois")
 class poiResource () {
@@ -36,7 +35,15 @@ fun Route.pois(poiServiceHandle: poiService) {
         val poi = poiServiceHandle.getById(poiId.id)
     }
     post("/pois") {
-        val poiDto = call.receive<poiDto>()
+        val p = call.receive<poi>()
+        val poiDto = poiDto(
+            id = p.id,
+            name = p.name,
+            description = p.description,
+            lat = p.lat,
+            lon = p.lon,
+            idPostaje = p.idPostaje
+        )
         poiServiceHandle.create(poiDto)
         call.respond(HttpStatusCode.Created)
     }
