@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>si.travelbuddy</groupId>
+        <artifactId>ticket-search-service</artifactId>
+        <version>0.0.1</version>
+    </parent>
+
+    <groupId>si.travelbuddy.ticketsearch</groupId>
+    <artifactId>service</artifactId>
+    <packaging>jar</packaging>
+
+    <name>service</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-cdi-weld</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-jta-narayana</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kumuluz.ee.rest</groupId>
+            <artifactId>kumuluzee-rest-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.rest-client</groupId>
+            <artifactId>kumuluzee-rest-client</artifactId>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.kumuluz.ee.security</groupId>-->
+        <!--            <artifactId>kumuluzee-security-keycloak</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.keycloak</groupId>-->
+        <!--            <artifactId>keycloak-jetty94-adapter</artifactId>-->
+        <!--        </dependency>-->
+
+        <dependency>
+            <groupId>si.travelbuddy.ticketsearch</groupId>
+            <artifactId>entity</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+    </dependencies>
+
+</project>
