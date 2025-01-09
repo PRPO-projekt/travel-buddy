@@ -37,3 +37,6 @@ jobs:
         
       - name: Deploy crowdsourcing service
         run: kubectl apply -f crowdsourcing-service/service.yaml
+
+      - name: Deploy POI service
+        run: kubectl apply -f poiService/service.yaml

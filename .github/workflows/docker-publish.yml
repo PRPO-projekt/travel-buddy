@@ -38,6 +38,8 @@ jobs:
           context: crowdsourcing-service
         - image: PRPO-projekt/account-manager-service
           context: account-manager
+        - image: PRPO-projekt/poi-service
+          context: poiService
 
     steps:
       - name: Checkout repository
