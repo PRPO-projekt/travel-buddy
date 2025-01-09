@@ -11,16 +11,16 @@ import si.travelbuddy.dto.poiDto
 import si.travelbuddy.entity.*
 
 @Resource("/pois")
-class poiResource () {
+class poiResource(val name: String = ".*") {
     @Resource("{id}")
     class Id(val parent : poiResource = poiResource(), val id: Int) {
     }
 }
 fun Route.pois(poiServiceHandle: poiService) {
-    get("/pois"){
+    get<poiResource> { poi ->
         call.respond(transaction {
             poiDao.all().toList()
-        }.map{ dao -> dao.toModel() })
+        }.map{ dao -> dao.toModel() }.filter { s -> Regex(poi.name).matches(s.name ?: "") })
     }
 
     get<poiResource.Id> { poiId ->
