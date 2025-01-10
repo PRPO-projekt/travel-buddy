@@ -1,4 +1,4 @@
-name: Kubernetes
+name: OKE deployment
 on:
   workflow_run:
     workflows: [Docker]
