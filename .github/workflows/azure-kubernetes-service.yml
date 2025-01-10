@@ -30,9 +30,10 @@
 name: Build and deploy an app to AKS
 
 on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
+  workflow_run:
+    workflows: [ Docker ]
+    types:
+      - completed
 
 env:
   RESOURCE_GROUP: "tb-group"

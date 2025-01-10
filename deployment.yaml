@@ -46,8 +46,8 @@ spec:
                 secretKeyRef:
                   name: prpo-db
                   key: db-pass
-        - name: crowdsourcing-service
-          image: ghcr.io/prpo-projekt/crowdsourcing-service:main
+        - name: poi-service
+          image: ghcr.io/prpo-projekt/poi-service:main
           imagePullPolicy: Always
           ports:
             - containerPort: 8082
