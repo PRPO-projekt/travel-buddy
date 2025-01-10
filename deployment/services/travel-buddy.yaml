@@ -9,14 +9,18 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
+      name: timetable-service
     - protocol: TCP
       port: 8081
       targetPort: 8081
+      name: routing-service
     - protocol: TCP
       port: 8082
       targetPort: 8082
+      name: crowdsourcing-service
     - protocol: TCP
       port: 8090
       targetPort: 8090
+      name: poi-service
   type: LoadBalancer
   
