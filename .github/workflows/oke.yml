@@ -1,9 +1,6 @@
 name: OKE deployment
 on:
-  workflow_run:
-    workflows: [Docker]
-    types:
-      - completed
+  workflow_dispatch:
 
 jobs:
   deploy:
