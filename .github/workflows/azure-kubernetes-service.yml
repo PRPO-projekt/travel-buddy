@@ -52,7 +52,7 @@ jobs:
 
       # Logs in with your Azure credentials
       - name: Azure login
-        uses: azure/login@v1.4.6
+        uses: azure/login@v2
         with:
           auth-type: IDENTITY 
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
