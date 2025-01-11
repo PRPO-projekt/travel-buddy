@@ -6,6 +6,6 @@ import javax.ws.rs.core.Application;
  * Hello world!
  *
  */
-@ApplicationPath("v1")
+@ApplicationPath("/")
 public class App extends Application {
 }

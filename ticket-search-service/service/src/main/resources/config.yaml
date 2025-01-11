@@ -8,11 +8,10 @@ kumuluzee:
   datasources:
     - name: TicketsDS
       jndi-name: jdbc/Tickets
-      connection-url: jdbc:postgresql://127.0.0.1:5432/traverl-buddy
-      username: postgresql
-      password: root
+      connection-url: jdbc:postgresql://traverl-buddy.postgres.database.azure.com:5432/prpo
+      username: prpo
+      password: ,7D9gJ7dujv'ZP_
       driver-class: org.postgresql.Driver
-      max-pool-size: 20
   jpa:
     enabled: true
     packages:

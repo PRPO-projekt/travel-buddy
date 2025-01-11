@@ -88,6 +88,16 @@
                 <artifactId>keycloak-jetty94-adapter</artifactId>
                 <version>${keycloak.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-jpa-hibernate</artifactId>
+                <version>4.1.0</version>
+            </dependency>
+            <dependency>
+                <artifactId>kumuluzee-logs-log4j2</artifactId>
+                <groupId>com.kumuluz.ee.logs</groupId>
+                <version>1.4.6</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.postgresql</groupId>

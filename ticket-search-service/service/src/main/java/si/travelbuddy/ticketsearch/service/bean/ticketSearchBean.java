@@ -4,12 +4,14 @@ import si.travelbuddy.ticketsearch.entity.ticketSearch;
 import si.travelbuddy.ticketsearch.service.dto.ticketSearchDto;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+@ApplicationScoped
 public class ticketSearchBean {
     @PersistenceContext(unitName = "ticketSearch-jpa")
     private EntityManager em;

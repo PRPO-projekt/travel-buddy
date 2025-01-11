@@ -1,4 +1,5 @@
 package si.travelbuddy.ticketsearch.sources;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -25,7 +26,7 @@ import si.travelbuddy.ticketsearch.service.dto.ticketSearchDto;
 
 @Path("ticketSearch")
 @CrossOrigin(supportedMethods = "GET, POST, DELETE")
-@RequestScoped
+@ApplicationScoped
 public class ticketSearchResource {
 
     @Context
