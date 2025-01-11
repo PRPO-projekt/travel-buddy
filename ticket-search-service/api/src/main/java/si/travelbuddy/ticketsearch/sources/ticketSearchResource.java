@@ -1,4 +1,5 @@
 package si.travelbuddy.ticketsearch.sources;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -22,9 +23,11 @@ import si.travelbuddy.ticketsearch.service.bean.*;
 import si.travelbuddy.ticketsearch.service.dto.ticketSearchDto;
 
 
-@Path("/ticketSearch")
+@Path("ticketSearch")
 @CrossOrigin(supportedMethods = "GET, POST, DELETE")
+@RequestScoped
 public class ticketSearchResource {
+
     @Context
     private UriInfo uriInfo;
 
@@ -61,8 +64,8 @@ public class ticketSearchResource {
                     description =  "Ni bila najdena karta"
             )
     })
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+   // @Produces(MediaType.APPLICATION_JSON)
     @GET
     public Response getTicketSearchById(@PathParam("id") String id2) {
         ticketSearch tmp = searchBean.getTicketById(UUID.fromString(id2));
@@ -79,8 +82,8 @@ public class ticketSearchResource {
                     content = @Content(schema = @Schema(implementation = ticketSearchDto.class, type = SchemaType.OBJECT))
             )
     })
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    //@Consumes(MediaType.APPLICATION_JSON)
+    //@Produces(MediaType.APPLICATION_JSON)
     @POST
     public Response createNewTicket(@RequestBody ticketSearchDto ticket) {
         return Response.status(Response.Status.BAD_REQUEST).build();
