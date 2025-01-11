@@ -26,5 +26,9 @@ spec:
       port: 8091
       targetPort: 8091
       name: account-manager-service
+    - protocol: TCP
+      port: 8092
+      targetPort: 8092
+      name: user-manager-service
   type: LoadBalancer
   

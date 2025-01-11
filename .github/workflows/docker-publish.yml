@@ -40,6 +40,8 @@ jobs:
           context: account-manager
         - image: PRPO-projekt/poi-service
           context: poiService
+        - image: PRPO-projekt/user-manager-service
+          context: user-manager
 
     steps:
       - name: Checkout repository

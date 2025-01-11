@@ -55,5 +55,14 @@ spec:
                 secretKeyRef:
                   name: prpo-db
                   key: db-pass
+        - name: user-manager-service
+          image: ghcr.io/prpo-projekt/user-manager-service:main
+          imagePullPolicy: Always
+          env:
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: prpo-db
+                  key: db-pass
       restartPolicy: Always
       
