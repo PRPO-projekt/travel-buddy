@@ -90,6 +90,11 @@
             </dependency>
             <dependency>
                 <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-jta-narayana</artifactId>
+                <version>4.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
                 <artifactId>kumuluzee-jpa-hibernate</artifactId>
                 <version>4.1.0</version>
             </dependency>
@@ -103,6 +108,22 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>si.travelbuddy.ticketsearch</groupId>
+                <artifactId>api</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>si.travelbuddy.ticketsearch</groupId>
+                <artifactId>service</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>si.travelbuddy.ticketsearch</groupId>
+                <artifactId>entity</artifactId>
+                <version>0.0.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
