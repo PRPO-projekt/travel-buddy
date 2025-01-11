@@ -1,0 +1,27 @@
+kumuluzee:
+  name: "travel-buddy-ticket-search"
+  version: "0.0.1"
+  env: "dev"
+  server:
+    http:
+      port: 8080
+  datasources:
+    - name: TicketsDS
+      jndi-name: jdbc/Tickets
+      connection-url: jdbc:postgresql://127.0.0.1:5432/traverl-buddy
+      username: postgresql
+      password: root
+      driver-class: org.postgresql.Driver
+      max-pool-size: 20
+  jpa:
+    enabled: true
+    packages:
+      - si.travelbuddy.ticketsearch.service.bean
+      - si.travelbuddy.ticketsearch.entity
+    properties:
+      hibernate.hbm2ddl.auto: update
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      javax.persistence.schema-generation.database.action: drop-and-create
+      javax.persistence.schema-generation.create-source: metadata
+      javax.persistence.schema-generation.drop-source: metadata
+      javax.persistence.sql-load-script-source: sql-init-db.sql

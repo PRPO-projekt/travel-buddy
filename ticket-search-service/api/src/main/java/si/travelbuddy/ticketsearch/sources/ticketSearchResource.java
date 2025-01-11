@@ -5,6 +5,7 @@ import javax.ws.rs.core.*;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -21,16 +22,19 @@ import si.travelbuddy.ticketsearch.service.bean.*;
 import si.travelbuddy.ticketsearch.service.dto.ticketSearchDto;
 
 
-@Path("ticketSearch")
+@Path("/ticketSearch")
 @CrossOrigin(supportedMethods = "GET, POST, DELETE")
 public class ticketSearchResource {
     @Context
     private UriInfo uriInfo;
 
+    Logger log;
+
+
     @Inject
     private ticketSearchBean searchBean;
 
-    @Produces(MediaType.APPLICATION_JSON)
+    //@Produces(MediaType.APPLICATION_JSON)
     @Operation(description = "Vrne seznam kart.", summary = "Seznam kart")
     @APIResponses({
             @APIResponse(responseCode = "200",
@@ -41,7 +45,9 @@ public class ticketSearchResource {
     })
     @GET
     public Response getTicketSearch() {
+        log.info("getTicketSearch has been entered");
         List<ticketSearch> tmp = searchBean.getAllTickets();
+        log.info("getTicketSearch will be exited");
         return Response.ok().entity(tmp).build();
     }
 
@@ -55,7 +61,7 @@ public class ticketSearchResource {
                     description =  "Ni bila najdena karta"
             )
     })
-    @Path("ticketSearch/{id}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     public Response getTicketSearchById(@PathParam("id") String id2) {
@@ -77,6 +83,9 @@ public class ticketSearchResource {
     @Produces(MediaType.APPLICATION_JSON)
     @POST
     public Response createNewTicket(@RequestBody ticketSearchDto ticket) {
+        return Response.status(Response.Status.BAD_REQUEST).build();
+        /*System.out.println(ticket);
+        System.out.println("ABRAKADABRA");
         if(ticket.getArrival() == null || ticket.getDeparture() == null ||
                 ticket.getRouteId() == null ||
                 ticket.getFrom() == null || ticket.getTo() == null) {
@@ -84,6 +93,6 @@ public class ticketSearchResource {
         }
         ticketSearch dto = searchBean.ticketSearchToDto(ticket);
         searchBean.createTicket(dto);
-        return Response.ok().entity(dto).build();
+        return Response.ok().entity(dto).build();*/
     }
 }

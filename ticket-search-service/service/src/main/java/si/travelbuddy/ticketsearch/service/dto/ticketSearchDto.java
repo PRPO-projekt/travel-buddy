@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class ticketSearchDto {
 
-    private UUID id;
+    private String id;
     private String routeId;
 
     private String from;
@@ -18,7 +18,7 @@ public class ticketSearchDto {
     }
 
     public void setId(String id) {
-        this.id = UUID.fromString(id);
+        this.id = id;
     }
 
     public void setFrom(String from) {
@@ -42,7 +42,7 @@ public class ticketSearchDto {
     }
 
     public UUID getId() {
-        return id;
+        return UUID.fromString(id);
     }
 
     public String getFrom() {

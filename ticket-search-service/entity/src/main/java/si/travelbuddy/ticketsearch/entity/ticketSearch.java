@@ -6,7 +6,6 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
-
 @Table(name = "Tickets")
 @NamedQueries({
         @NamedQuery(name = "ticketSearch.findAll", query = "SELECT t FROM Tickets t"),
@@ -18,10 +17,10 @@ public class ticketSearch {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name="to")
+    @Column(name="toLocation")
     private String to;
 
-    @Column(name="from")
+    @Column(name="fromLocation")
     private String from;
 
     @Column(name="departure")

@@ -3,6 +3,7 @@
     <persistence-unit name="ticketSearch-jpa" transaction-type="JTA">
         <jta-data-source>jdbc/Tickets</jta-data-source>
 
+        <class>si.travelbuddy.ticketsearch.service.bean.ticketSearchBean</class>
         <class>si.travelbuddy.ticketsearch.entity.ticketSearch</class>
         <class>si.travelbuddy.ticketsearch.entity.instantConverter</class>
 
@@ -10,8 +11,8 @@
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/traverl-buddy"/>
-            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:5432/traverl-buddy"/>
+            <property name="javax.persistence.jdbc.user" value="postgresql"/>
             <property name="javax.persistence.jdbc.password" value="root"/>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="javax.persistence.schema-generation.create-source" value="metadata"/>
