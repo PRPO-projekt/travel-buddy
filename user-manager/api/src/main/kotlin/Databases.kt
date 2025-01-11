@@ -3,6 +3,10 @@ package si.travelbuddy.userManager
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
+import si.travelbuddy.UserSavedPoiService
+import si.travelbuddy.UserSavedTripService
+import si.travelbuddy.UserService
+import si.travelbuddy.UserSettingsService
 
 fun Application.configureDatabases() {
     val dbPass: String? = System.getenv("DB_PASS")
@@ -16,11 +20,15 @@ fun Application.configureDatabases() {
         password = dbPass
     )
 
+    val userService = UserService(database)
+    val userSettingsService = UserSettingsService(database)
+    val userSavedTripService = UserSavedTripService(database)
+    val userSavedPoiService = UserSavedPoiService(database)
 
-//    FIXME: Delete if necessary
-//    val depService = DepartureDelayService(database)
-
-//    routing {
-//        departureDelay(depService)
-//    }
+    routing {
+        users(userService)
+        userSettings(userSettingsService)
+        userTrips(userSavedTripService)
+        userPois(userSavedPoiService)
+    }
 }

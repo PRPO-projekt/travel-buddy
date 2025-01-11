@@ -26,7 +26,6 @@ fun Application.configureHTTP() {
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
     }
     routing {
-        // openAPI(path = "openapi", swaggerFile = "openapi/documentation.yaml")
         swaggerUI(path = "openapi", swaggerFile = "openapi/documentation.yaml")
     }
 }

@@ -19,7 +19,7 @@ class UserService(private val database: Database) {
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
     suspend fun updateUser(userData: UpdateUserDto) = dbQuery {
-        val user = UserDao.findByIdAndUpdate(userData.id)
+        UserDao.findByIdAndUpdate(userData.id)
         {
             if (userData.name != null) it.name = userData.name
             if (userData.surname != null) it.surname = userData.surname
@@ -30,11 +30,4 @@ class UserService(private val database: Database) {
     suspend fun deleteUser(userId: Long) = dbQuery {
         UserDao.findById(userId)?.delete()
     }
-
-    suspend fun getUserById(id: Long) = dbQuery {
-        UserDao.findById(id)
-    }
-
-
-
 }

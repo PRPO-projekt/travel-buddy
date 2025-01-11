@@ -1,28 +1,31 @@
 package si.travelbuddy
 
 import kotlinx.serialization.Serializable
+import org.jetbrains.exposed.dao.CompositeEntity
+import org.jetbrains.exposed.dao.CompositeEntityClass
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
+import org.jetbrains.exposed.dao.id.CompositeID
+import org.jetbrains.exposed.dao.id.CompositeIdTable
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
 
-object UserSavedTripTable: LongIdTable() {
-    val userId = long("user_id")
-    val tripId = long("trip_id")
+object UserSavedTripTable: CompositeIdTable() {
+    val userId = reference("user_id", UserTable).entityId()
+    val tripId = long("trip_id").entityId()
 }
 
-class UserSavedTripDao(id: EntityID<Long>) : LongEntity(id) {
-    companion object : LongEntityClass<UserSavedTripDao>(UserSavedTripTable)
+class UserSavedTripDao(id: EntityID<CompositeID>) : CompositeEntity(id) {
+    companion object : CompositeEntityClass<UserSavedTripDao>(UserSavedTripTable)
 
     var userId by UserSavedTripTable.userId
     var tripId by UserSavedTripTable.tripId
 
-    fun toModel(): UserSavedTrip = UserSavedTrip(id.value, userId, tripId)
+    fun toModel(): UserSavedTrip = UserSavedTrip(userId.value.value, tripId.value)
 }
 
 @Serializable
 data class UserSavedTrip(
-    val id: Long,
     val userId: Long,
     val tripId: Long
 )
