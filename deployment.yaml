@@ -19,9 +19,6 @@ spec:
         - name: timetable-service
           image: ghcr.io/prpo-projekt/timetable-service:main
           imagePullPolicy: Always
-          ports:
-            - containerPort: 8080
-              protocol: TCP
           env:
             - name: DB_PASS
               valueFrom:
@@ -31,15 +28,27 @@ spec:
         - name: routing-service
           image: ghcr.io/prpo-projekt/routing-service:main
           imagePullPolicy: Always
-          ports:
-            - containerPort: 8081
-              protocol: TCP
         - name: crowdsourcing-service
           image: ghcr.io/prpo-projekt/crowdsourcing-service:main
           imagePullPolicy: Always
-          ports:
-            - containerPort: 8082
-              protocol: TCP
+          env:
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: prpo-db
+                  key: db-pass
+        - name: poi-service
+          image: ghcr.io/prpo-projekt/poi-service:main
+          imagePullPolicy: Always
+          env:
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                 name: prpo-db
+                 key: db-pass
+        - name: account-manager-service
+          image: ghcr.io/prpo-projekt/account-manager-service:main
+          imagePullPolicy: Always
           env:
             - name: DB_PASS
               valueFrom:

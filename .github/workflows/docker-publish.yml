@@ -36,6 +36,10 @@ jobs:
           context: routing-service
         - image: PRPO-projekt/crowdsourcing-service
           context: crowdsourcing-service
+        - image: PRPO-projekt/account-manager-service
+          context: account-manager
+        - image: PRPO-projekt/poi-service
+          context: poiService
 
     steps:
       - name: Checkout repository
@@ -75,7 +79,7 @@ jobs:
           file: ${{ matrix.context }}/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
-          platforms: linux/amd64, linux/arm64/v8
+          platforms: linux/amd64
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

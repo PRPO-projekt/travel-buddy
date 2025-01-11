@@ -1,9 +1,6 @@
-name: Kubernetes
+name: OKE deployment
 on:
-  workflow_run:
-    workflows: [Docker]
-    types:
-      - completed
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -28,12 +25,3 @@ jobs:
 
       - name: Deploy manifest
         run: kubectl apply -f deployment.yaml
-
-      - name: Deploy timetable service
-        run: kubectl apply -f TimetableService/service.yaml
-
-      - name: Deploy routing service
-        run: kubectl apply -f routing-service/service.yaml
-        
-      - name: Deploy crowdsourcing service
-        run: kubectl apply -f crowdsourcing-service/service.yaml

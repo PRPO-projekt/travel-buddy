@@ -1,0 +1,69 @@
+openapi: "3.1.0"
+info:
+  title: "account_manager API"
+  description: "account_manager API"
+  version: "1.0.0"
+servers:
+- url: "/"
+paths:
+  /json/kotlinx-serialization:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Map_String"
+  /login:
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginUserDto"
+        required: true
+  /register:
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterUserDto"
+        required: true
+components:
+  schemas:
+    Map:
+      type: "object"
+      properties: {}
+    Map_String:
+      type: "string"
+    LoginUserDto:
+      type: "object"
+      properties:
+        username:
+          type: "string"
+        password:
+          type: "string"
+      required:
+      - "username"
+      - "password"
+    RegisterUserDto:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        surname:
+          type: "string"
+        username:
+          type: "string"
+        password:
+          type: "string"
+      required:
+      - "name"
+      - "surname"
+      - "username"
+      - "password"
