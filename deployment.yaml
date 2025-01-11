@@ -47,7 +47,7 @@ spec:
                  name: prpo-db
                  key: db-pass
         - name: account-manager-service
-          image: ghcr.io/prpo-project/account-manager-service:main
+          image: ghcr.io/prpo-projekt/account-manager-service:main
           imagePullPolicy: Always
           env:
             - name: DB_PASS
