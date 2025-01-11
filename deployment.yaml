@@ -28,9 +28,6 @@ spec:
         - name: routing-service
           image: ghcr.io/prpo-projekt/routing-service:main
           imagePullPolicy: Always
-          ports:
-            - containerPort: 8081
-              protocol: TCP
         - name: crowdsourcing-service
           image: ghcr.io/prpo-projekt/crowdsourcing-service:main
           imagePullPolicy: Always
@@ -49,5 +46,14 @@ spec:
                 secretKeyRef:
                  name: prpo-db
                  key: db-pass
+        - name: account-manager-service
+          image: ghcr.io/prpo-project/account-manager-service:main
+          imagePullPolicy: Always
+          env:
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: prpo-db
+                  key: db-pass
       restartPolicy: Always
       

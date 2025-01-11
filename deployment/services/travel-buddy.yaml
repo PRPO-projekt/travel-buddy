@@ -22,5 +22,9 @@ spec:
       port: 8090
       targetPort: 8090
       name: poi-service
+    - protocol: TCP
+      port: 8091
+      targetPort: 8091
+      name: account-manager-service
   type: LoadBalancer
   
