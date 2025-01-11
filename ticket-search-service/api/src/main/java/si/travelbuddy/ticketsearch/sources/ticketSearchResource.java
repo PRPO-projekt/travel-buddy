@@ -1,6 +1,5 @@
 package si.travelbuddy.ticketsearch.sources;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -12,7 +11,6 @@ import java.util.logging.Logger;
 import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
-import org.eclipse.microprofile.openapi.models.parameters.*;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -49,9 +47,9 @@ public class ticketSearchResource {
     })
     @GET
     public Response getTicketSearch() {
-        log.info("getTicketSearch has been entered");
-        List<ticketSearch> tmp = searchBean.getAllTickets();
-        log.info("getTicketSearch will be exited");
+        // log.info("getTicketSearch has been entered");
+        List<Tickets> tmp = searchBean.getAllTickets();
+        // log.info("getTicketSearch will be exited");
         return Response.ok().entity(tmp).build();
     }
 
@@ -69,7 +67,7 @@ public class ticketSearchResource {
    // @Produces(MediaType.APPLICATION_JSON)
     @GET
     public Response getTicketSearchById(@PathParam("id") String id2) {
-        ticketSearch tmp = searchBean.getTicketById(UUID.fromString(id2));
+        Tickets tmp = searchBean.getTicketById(UUID.fromString(id2));
         if (tmp == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

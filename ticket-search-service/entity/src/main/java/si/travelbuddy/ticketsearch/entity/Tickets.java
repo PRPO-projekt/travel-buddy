@@ -8,11 +8,11 @@ import java.util.UUID;
 @Entity
 @Table(name = "Tickets")
 @NamedQueries({
-        @NamedQuery(name = "ticketSearch.findAll", query = "SELECT t FROM Tickets t"),
-        @NamedQuery(name = "ticketSearch.findById", query = "SELECT t FROM Tickets t WHERE t.id = :id")
+        @NamedQuery(name = "Tickets.findAll", query = "SELECT t FROM Tickets t"),
+        @NamedQuery(name = "Tickets.findById", query = "SELECT t FROM Tickets t WHERE t.id = :id")
 })
 
-public class ticketSearch {
+public class Tickets {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;

@@ -1,6 +1,6 @@
 package si.travelbuddy.ticketsearch.service.bean;
 
-import si.travelbuddy.ticketsearch.entity.ticketSearch;
+import si.travelbuddy.ticketsearch.entity.Tickets;
 import si.travelbuddy.ticketsearch.service.dto.ticketSearchDto;
 
 import javax.annotation.PostConstruct;
@@ -8,7 +8,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.sql.Timestamp;
 import java.util.UUID;
 
 @ApplicationScoped
@@ -22,24 +21,24 @@ public class ticketSearchBean {
 
     }
 
-    public List<ticketSearch> getAllTickets(){
-        return em.createNamedQuery("ticketSearch.findAll", ticketSearch.class).getResultList();
+    public List<Tickets> getAllTickets(){
+        return em.createNamedQuery("Tickets.findAll", Tickets.class).getResultList();
     }
-    public ticketSearch getTicketById(UUID id){
-        return em.find(ticketSearch.class, id);
+    public Tickets getTicketById(UUID id){
+        return em.find(Tickets.class, id);
     }
-    public void createTicket(ticketSearch ticket){
+    public void createTicket(Tickets ticket){
         em.persist(ticket);
     }
-    public void updateTicket(ticketSearch ticket){
+    public void updateTicket(Tickets ticket){
         em.merge(ticket);
     }
-    public void deleteTicket(ticketSearch ticket){
+    public void deleteTicket(Tickets ticket){
         em.remove(ticket);
     }
 
-    public ticketSearch ticketSearchToDto(ticketSearchDto a){
-        ticketSearch b = new ticketSearch();
+    public Tickets ticketSearchToDto(ticketSearchDto a){
+        Tickets b = new Tickets();
 
         b.setArrival(a.getArrival());
         b.setDeparture(a.getDeparture());

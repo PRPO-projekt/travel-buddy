@@ -6,7 +6,7 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="ticketSearch-jpa" transaction-type="JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>si.travelbuddy.ticketsearch.entity.ticketSearch</class>
+        <class>si.travelbuddy.ticketsearch.entity.Tickets</class>
         <class>si.travelbuddy.ticketsearch.entity.instantConverter</class>
 
         <properties>
