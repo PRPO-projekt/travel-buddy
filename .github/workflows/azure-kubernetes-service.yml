@@ -79,4 +79,6 @@ jobs:
         uses: Azure/k8s-deploy@v4
         with:
           action: deploy
-          manifests: deployment/services
+          manifests: |
+            deployment.yaml
+            deployment/services
