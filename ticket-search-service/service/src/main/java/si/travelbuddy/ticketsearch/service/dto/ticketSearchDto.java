@@ -1,19 +1,20 @@
-package si.travelbuddy.ticketsearch.dto;
+package si.travelbuddy.ticketsearch.service.dto;
 
-import org.hibernate.Session;
 import java.sql.*;
 import java.util.UUID;
 
-public class ticketDto {
+public class ticketSearchDto {
 
     private UUID id;
+    private String routeId;
+
     private String from;
     private String to;
     private Timestamp departure;
     private Timestamp arrival;
-    private String routeId;
 
-    ticketDto(){
+
+    ticketSearchDto(){
     }
 
     public void setId(String id) {
@@ -39,8 +40,6 @@ public class ticketDto {
     public void setRouteId(String routeId) {
         this.routeId = routeId;
     }
-
-
 
     public UUID getId() {
         return id;

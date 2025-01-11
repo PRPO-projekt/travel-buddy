@@ -9,11 +9,11 @@ import java.util.UUID;
 
 @Table(name = "Tickets")
 @NamedQueries({
-        @NamedQuery(name = "Ticket.findAll", query = "SELECT t FROM Tickets t"),
-        @NamedQuery(name = "Ticket.findById", query = "SELECT t FROM Tickets t WHERE t.id = :id")
+        @NamedQuery(name = "ticketSearch.findAll", query = "SELECT t FROM Tickets t"),
+        @NamedQuery(name = "ticketSearch.findById", query = "SELECT t FROM Tickets t WHERE t.id = :id")
 })
-public class ticket {
 
+public class ticketSearch {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -32,6 +32,11 @@ public class ticket {
 
     @Column(name="routeId")
     private String routeId;
+
+    @Column(name="price")
+    private double price;
+
+    public void setPrice(double price) {this.price = price;}
 
     public void setId(String id) {
         this.id = UUID.fromString(id);
@@ -58,6 +63,7 @@ public class ticket {
     }
 
 
+    public double getPrice() { return price;}
 
     public UUID getId() {
         return id;
