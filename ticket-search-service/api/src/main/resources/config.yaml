@@ -4,7 +4,7 @@ kumuluzee:
   env: "dev"
   server:
     http:
-      port: 8080
+      port: 8093
   datasources:
     - name: TicketsDS
       jndi-name: jdbc/Tickets

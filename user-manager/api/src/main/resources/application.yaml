@@ -1,0 +1,6 @@
+ktor:
+  application:
+    modules:
+      - si.travelbuddy.userManager.ApplicationKt.module
+  deployment:
+    port: 8092
