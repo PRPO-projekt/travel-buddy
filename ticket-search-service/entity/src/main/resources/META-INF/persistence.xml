@@ -16,7 +16,7 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://traverl-buddy.postgres.database.azure.com:5432/prpo"/>
             <property name="javax.persistence.jdbc.user" value="prpo"/>
             <property name="javax.persistence.jdbc.password" value=",7D9gJ7dujv'ZP_"/>
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <!--<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>-->
             <property name="javax.persistence.schema-generation.create-source" value="metadata"/>
             <property name="javax.persistence.sql-load-script-source" value="sql-init-db.sql"/>
             <property name="javax.persistence.schema-generation.drop-source" value="metadata"/>

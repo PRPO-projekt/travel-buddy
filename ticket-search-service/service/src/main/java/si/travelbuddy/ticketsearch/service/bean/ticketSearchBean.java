@@ -7,8 +7,11 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
+
 
 @ApplicationScoped
 public class ticketSearchBean {
@@ -21,31 +24,43 @@ public class ticketSearchBean {
 
     }
 
+    @Transactional
     public List<Tickets> getAllTickets(){
-        return em.createNamedQuery("Tickets.findAll", Tickets.class).getResultList();
+        List<Tickets> returnParam = em.createNamedQuery("Tickets.findAll", Tickets.class).getResultList();
+        return returnParam;
     }
+    @Transactional
     public Tickets getTicketById(UUID id){
         return em.find(Tickets.class, id);
     }
+
+    @Transactional
     public void createTicket(Tickets ticket){
-        em.persist(ticket);
+        em.merge(ticket);
     }
+
+    @Transactional
     public void updateTicket(Tickets ticket){
         em.merge(ticket);
     }
+
+    @Transactional
     public void deleteTicket(Tickets ticket){
-        em.remove(ticket);
+        Tickets tmp = em.find(Tickets.class, ticket.getId());
+        em.remove(tmp);
     }
 
     public Tickets ticketSearchToDto(ticketSearchDto a){
         Tickets b = new Tickets();
 
-        b.setArrival(a.getArrival());
-        b.setDeparture(a.getDeparture());
-        b.setId(a.getRouteId());
+        b.setArrival(Timestamp.valueOf(a.getArrival()));
+        b.setDeparture(Timestamp.valueOf(a.getDeparture()));
+        b.setId(a.getId());
         b.setRouteId(a.getRouteId());
         b.setTo(a.getTo());
         b.setFrom(a.getFrom());
+        b.setPrice(a.getPrice());
+        b.setStopTime(a.getStop_time());
         return b;
     }
 

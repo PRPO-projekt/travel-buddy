@@ -21,7 +21,8 @@ import si.travelbuddy.ticketsearch.entity.*;
 import si.travelbuddy.ticketsearch.service.bean.*;
 import si.travelbuddy.ticketsearch.service.dto.ticketSearchDto;
 
-
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @Path("ticketSearch")
 @CrossOrigin(supportedMethods = "GET, POST, DELETE")
 @ApplicationScoped
@@ -36,7 +37,6 @@ public class ticketSearchResource {
     @Inject
     private ticketSearchBean searchBean;
 
-    //@Produces(MediaType.APPLICATION_JSON)
     @Operation(description = "Vrne seznam kart.", summary = "Seznam kart")
     @APIResponses({
             @APIResponse(responseCode = "200",
@@ -49,8 +49,32 @@ public class ticketSearchResource {
     public Response getTicketSearch() {
         // log.info("getTicketSearch has been entered");
         List<Tickets> tmp = searchBean.getAllTickets();
+        Tickets a = tmp.get(0);
+        //searchBean.createTicket(a);
         // log.info("getTicketSearch will be exited");
         return Response.ok().entity(tmp).build();
+    }
+
+
+    @Operation(description = "Nastavi novo karto", summary = "Naredi novo karto")
+    @APIResponses({
+            @APIResponse(responseCode = "200",
+                    description = "Naredi novo karto",
+                    content = @Content(schema = @Schema(implementation = ticketSearchDto.class, type = SchemaType.OBJECT) ,
+                            mediaType = MediaType.APPLICATION_JSON)
+            )
+    })
+    @POST
+        public Response createNewTicket(ticketSearchDto ticket) {
+        if(ticket.getArrival() == null || ticket.getDeparture() == null ||
+                ticket.getRouteId() == null ||
+                ticket.getFrom() == null || ticket.getTo() == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        Tickets tickets = searchBean.ticketSearchToDto(ticket);
+        searchBean.createTicket(tickets);
+        return Response.ok().entity(ticket).build();
+
     }
 
     @Operation(description = "Vrne posamezno karto.", summary = "Karta z IDjem")
@@ -64,37 +88,22 @@ public class ticketSearchResource {
             )
     })
     @Path("{id}")
-   // @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @GET
-    public Response getTicketSearchById(@PathParam("id") String id2) {
-        Tickets tmp = searchBean.getTicketById(UUID.fromString(id2));
+    public Response getTicketSearchById(@PathParam("id") String id) {
+        Tickets tmp = searchBean.getTicketById(UUID.fromString(id));
         if (tmp == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok().entity(tmp).build();
     }
 
-    @Operation(description = "Nastavi novo karto", summary = "Naredi novo karto")
-    @APIResponses({
-            @APIResponse(responseCode = "200",
-                    description = "Naredi novo karto",
-                    content = @Content(schema = @Schema(implementation = ticketSearchDto.class, type = SchemaType.OBJECT))
-            )
-    })
-    //@Consumes(MediaType.APPLICATION_JSON)
-    //@Produces(MediaType.APPLICATION_JSON)
-    @POST
-    public Response createNewTicket(@RequestBody ticketSearchDto ticket) {
-        return Response.status(Response.Status.BAD_REQUEST).build();
-        /*System.out.println(ticket);
-        System.out.println("ABRAKADABRA");
-        if(ticket.getArrival() == null || ticket.getDeparture() == null ||
-                ticket.getRouteId() == null ||
-                ticket.getFrom() == null || ticket.getTo() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        ticketSearch dto = searchBean.ticketSearchToDto(ticket);
-        searchBean.createTicket(dto);
-        return Response.ok().entity(dto).build();*/
+
+    @DELETE
+    @Path("{id}")
+    public Response deleteTicket(@PathParam("id") String id) {
+        Tickets dto = searchBean.getTicketById(UUID.fromString(id));
+        searchBean.deleteTicket(dto);
+        return Response.status(Response.Status.ACCEPTED).build();
     }
 }
