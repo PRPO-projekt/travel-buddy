@@ -1,0 +1,15 @@
+kumuluzee:
+  name: "travel-buddy-purchase"
+  version: "0.0.1"
+  env: "dev"
+  server:
+    http:
+      port: 8080
+  datasources:
+    - name: BillsDS
+      jndi-name: jdbc/purchasedtickets
+      connection-url: jdbc:postgresql://127.0.0.1:5432/traverl-buddy
+      username: postgresql
+      password: root
+      driver-class: org.postgresql.Driver
+      max-pool-size: 20
