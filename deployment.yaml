@@ -71,7 +71,7 @@ spec:
             httpGet:
               port: 8093
               path: /health
-            initialDelaySeconds: 30
+            initialDelaySeconds: 120
             periodSeconds: 5
         - name: purchase-service
           image: ghcr.io/prpo-projekt/purchase-service:main
@@ -80,7 +80,7 @@ spec:
             httpGet:
               port: 8094
               path: /health
-            initialDelaySeconds: 30
+            initialDelaySeconds: 120
             periodSeconds: 5
       restartPolicy: Always
       
