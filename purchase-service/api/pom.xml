@@ -19,44 +19,10 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-servlet-jetty</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-jax-rs-jersey</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.kumuluz.ee.config</groupId>
-            <artifactId>kumuluzee-config-mp</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee.openapi</groupId>
-            <artifactId>kumuluzee-openapi-mp</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee.openapi</groupId>
-            <artifactId>kumuluzee-openapi-mp-ui</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee.cors</groupId>
-            <artifactId>kumuluzee-cors</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee.health</groupId>
-            <artifactId>kumuluzee-health</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>si.travelbuddy.purchase</groupId>
             <artifactId>service</artifactId>
-            <version>0.0.1</version>
         </dependency>
     </dependencies>
 
