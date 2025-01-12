@@ -60,6 +60,13 @@ OpenAPI endpoint: /openapi
 
 This service allows for interacting with data associated with a specific user.
 
+## Docker
+
+Docker images are created using GitHub actions ([.github/workflows/docker-publish.yml](.github/workflows/docker-publish.yml)) and published to the GitHub container registry.
+To add a new image, add a new entry in the build job strategy matrix. 
+
+The image parameter defines the name of the resulting Docker image, which must start with `PRPO-projekt`. Context is the path to the folder where the Dockerfile for the microservice resides.
+
 ## Making a new microservice
 
 No matter which build system you are using (Maven, Gradle, ...), each microservice must contain three subprojects:
@@ -71,3 +78,5 @@ No matter which build system you are using (Maven, Gradle, ...), each microservi
 
 All of these subprojects must be in a shared group which starts with `si.travelbuddy` (for example, `si.travelbuddy.timetable`). 
 The parent project must be in the `si.travelbuddy` group.
+
+Furthermore, each microservice should also contain a Dockerfile.
