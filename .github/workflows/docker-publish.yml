@@ -44,6 +44,8 @@ jobs:
           context: user-manager
         - image: PRPO-projekt/ticket-search-service
           context: ticket-search-service
+        - image: PRPO-projekt/purchase-service
+          context: purchase-service
 
     steps:
       - name: Checkout repository
