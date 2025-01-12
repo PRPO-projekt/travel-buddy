@@ -152,7 +152,7 @@ fun Route.stops(stopService: StopService, stopTimeService: StopTimeService) {
                 HttpStatusCode.BadRequest
             }
 
-            stopTime
+            stopTime.toModel()
         })
     }
 
