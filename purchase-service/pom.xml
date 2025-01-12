@@ -6,16 +6,14 @@
     <groupId>si.travelbuddy</groupId>
     <artifactId>purchase-service</artifactId>
     <version>0.0.1</version>
+
     <packaging>pom</packaging>
     <modules>
         <module>api</module>
         <module>entity</module>
         <module>service</module>
     </modules>
-
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <kumuluzee.version>4.1.0</kumuluzee.version>
@@ -81,15 +79,51 @@
                 <version>${kumuluzee-security.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-servlet-jetty</artifactId>
+                <version>4.1.0</version>
+            </dependency>
+            <dependency>
                 <groupId>org.keycloak</groupId>
                 <artifactId>keycloak-jetty94-adapter</artifactId>
                 <version>${keycloak.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-jta-narayana</artifactId>
+                <version>4.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-jpa-hibernate</artifactId>
+                <version>4.1.0</version>
+            </dependency>
+            <dependency>
+                <artifactId>kumuluzee-logs-log4j2</artifactId>
+                <groupId>com.kumuluz.ee.logs</groupId>
+                <version>1.4.6</version>
             </dependency>
 
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>si.travelbuddy.purchase</groupId>
+                <artifactId>api</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>si.travelbuddy.purchase</groupId>
+                <artifactId>service</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>si.travelbuddy.purchase</groupId>
+                <artifactId>entity</artifactId>
+                <version>0.0.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
