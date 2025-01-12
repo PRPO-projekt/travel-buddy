@@ -64,5 +64,8 @@ spec:
                 secretKeyRef:
                   name: prpo-db
                   key: db-pass
+        - name: ticket-search-service
+          image: ghcr.io/prpo-projekt/ticket-search-service:main
+          imagePullPolicy: Always
       restartPolicy: Always
       
