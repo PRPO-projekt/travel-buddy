@@ -29,7 +29,7 @@ class StopsResource(
                          val from: Long = LocalTime.MIN.toSecondOfDay().toLong(),
                          val until: Long = LocalTime.MAX.toSecondOfDay().toLong()) {
             @Resource("{depId}")
-            class DepId(val parent: Departures, val id: String) {
+            class DepId(val parent: Departures, val depId: String) {
             }
         }
     }
@@ -137,7 +137,7 @@ fun Route.stops(stopService: StopService, stopTimeService: StopTimeService) {
         call.respond(transaction {
             var uuid: UUID? = null
             try {
-                uuid = UUID.fromString(id.id)
+                uuid = UUID.fromString(id.depId)
             }
             catch (e: IllegalArgumentException) {
                 HttpStatusCode.BadRequest
@@ -145,14 +145,14 @@ fun Route.stops(stopService: StopService, stopTimeService: StopTimeService) {
 
             val stopTime = StopTimeDao.findById(uuid!!)
             if (stopTime == null) {
-                HttpStatusCode.NotFound
+                return@transaction HttpStatusCode.NotFound
             }
 
             if (stopTime!!.stopId.id.value != id.parent.parent.id) {
-                HttpStatusCode.BadRequest
+                return@transaction HttpStatusCode.BadRequest
             }
 
-            stopTime.toModel()
+            return@transaction stopTime.toModel()
         })
     }
 

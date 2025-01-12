@@ -34,6 +34,6 @@ class StopTimeDao(id: EntityID<UUID>) : UUIDEntity(id) {
     var stopId by StopDao referencedOn StopTimeTable.stopId
 
     fun toModel(): StopTime = StopTime(
-        "", "", arrivalTime.toString(), departureTime.toString()
+        tripId.id.value, stopId.id.value, arrivalTime.toString(), departureTime.toString()
     )
 }
