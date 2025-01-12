@@ -4,7 +4,7 @@ kumuluzee:
   env: "dev"
   server:
     http:
-      port: 8080
+      port: 8094
   datasources:
     - name: BillsDS
       jndi-name: jdbc/purchasedtickets

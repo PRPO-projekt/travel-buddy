@@ -67,5 +67,8 @@ spec:
         - name: ticket-search-service
           image: ghcr.io/prpo-projekt/ticket-search-service:main
           imagePullPolicy: Always
+        - name: purchase-service
+          image: ghcr.io/prpo-projekt/purchase-service:main
+          imagePullPolicy: Always
       restartPolicy: Always
       
