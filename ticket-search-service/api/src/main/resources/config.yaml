@@ -1,3 +1,7 @@
 kumuluzee:
+  server:
+    http:
+      port: 8093
+
   env:
     name: dev
