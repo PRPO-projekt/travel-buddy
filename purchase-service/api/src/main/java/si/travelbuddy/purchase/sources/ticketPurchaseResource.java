@@ -35,12 +35,12 @@ public class ticketPurchaseResource {
     @Inject
     private purchasedTicketsBean purchaseBean;
 
-    @Operation(description = "Vrne seznam racunov.", summary = "Seznam racunov")
+    @Operation(description = "Vrne seznam računov.", summary = "Seznam računov")
     @APIResponses({
             @APIResponse(responseCode = "200",
-                    description = "Seznam racunov",
+                    description = "Seznam računov",
                     content = @Content(schema = @Schema(implementation = purchasedTicketsDto.class, type = SchemaType.ARRAY)),
-                    headers = {@Header(name = "X-Total-Count", description = "Število vrnjenih racunov")}
+                    headers = {@Header(name = "X-Total-Count", description = "Število vrnjenih računov")}
             )
     })
     @GET
@@ -51,10 +51,10 @@ public class ticketPurchaseResource {
     }
 
 
-    @Operation(description = "\"Kupimo\" novo karto", summary = "Nastavi racun kot da bo kmalu procesiran")
+    @Operation(description = "\"Kupimo\" novo karto", summary = "Nastavi račun kot da bo kmalu procesiran")
     @APIResponses({
             @APIResponse(responseCode = "200",
-                    description = "Naredi nov racun",
+                    description = "Naredi nov račun",
                     content = @Content(schema = @Schema(implementation = purchasedTicketsDto.class, type = SchemaType.OBJECT) ,
                             mediaType = MediaType.APPLICATION_JSON)
             )
@@ -71,14 +71,14 @@ public class ticketPurchaseResource {
 
 
 
-    @Operation(description = "Nastavi racun na \n1 - Potrjen\n2 - Zavrnjen\n3 - Povrjnjen\n.", summary = "Racun je sprocesiran do konca")
+    @Operation(description = "Nastavi račun na \n1 - Potrjen\n2 - Zavrnjen\n3 - Povrjnjen\n.", summary = "Račun je sprocesiran do konca")
     @APIResponses({
             @APIResponse(responseCode = "200",
-                    description = "Vrjnen racun",
+                    description = "Vrjnen račun",
                     content = @Content(schema = @Schema(implementation = purchasedTicketsDto.class, type = SchemaType.OBJECT))
             ),
             @APIResponse(responseCode = "404",
-                    description =  "Ni bil najden noben racun s podanim IDjem."
+                    description =  "Ni bil najden noben račun s podanim IDjem."
             )
     })
     @Path("{id}")
@@ -95,14 +95,14 @@ public class ticketPurchaseResource {
     }
 
 
-    @Operation(description = "Vrne racun s podanim IDjem.", summary = "Racun z IDjem")
+    @Operation(description = "Vrne račun s podanim IDjem.", summary = "Račun z IDjem")
     @APIResponses({
             @APIResponse(responseCode = "200",
-                    description = "Vrjnen racun",
+                    description = "Vrjnen račun",
                     content = @Content(schema = @Schema(implementation = purchasedTicketsDto.class, type = SchemaType.OBJECT))
             ),
             @APIResponse(responseCode = "404",
-                    description =  "Ni bil najden racun."
+                    description =  "Ni bil najden račun."
             )
     })
     @Path("{id}")
@@ -118,31 +118,32 @@ public class ticketPurchaseResource {
     }
 
 
-    @Operation(description = "Vrne racune uporabnika s podanim IDjem.", summary = "Racuni uporabnika z IDjem")
+    @Operation(description = "Vrne račune uporabnika s podanim IDjem.", summary = "Računi uporabnika z IDjem")
     @APIResponses({
             @APIResponse(responseCode = "200",
-                    description = "Vrjneni racuni",
+                    description = "Vrjneni računi",
                     content = @Content(schema = @Schema(implementation = purchasedTicketsDto.class, type = SchemaType.OBJECT))
             ),
             @APIResponse(responseCode = "404",
-                    description =  "Ni bil najden noben racun."
+                    description =  "Ni bil najden noben račun."
             )
     })
     @Path("users/{id}")
     @GET
     public Response getUserPurchasedTickets(@PathParam("id") String id) {
         List<PurchasedTickets> tmp = purchaseBean.getPurchasedTicketsByUserId(UUID.fromString(id));
+
         return Response.ok().entity(tmp).build();
     }
 
-    @Operation(description = "Vrne racune prodane posamezne karte", summary = "Racuni z karto")
+    @Operation(description = "Vrne račune prodane posamezne karte", summary = "Računi s karto")
     @APIResponses({
             @APIResponse(responseCode = "200",
-                    description = "Vrjneni racuni",
+                    description = "Vrjneni računi",
                     content = @Content(schema = @Schema(implementation = purchasedTicketsDto.class, type = SchemaType.OBJECT))
             ),
             @APIResponse(responseCode = "404",
-                    description =  "Ni bil najden noben racun z to kupljeno karto."
+                    description =  "Ni bil najden noben račun s to kupljeno karto."
             )
     })
     @Path("tickets/{id}")
@@ -152,14 +153,14 @@ public class ticketPurchaseResource {
         return Response.ok().entity(tmp).build();
     }
 
-    @Operation(description = "Vrne racune s podanim statusom.", summary = "Racun s statusom")
+    @Operation(description = "Vrne račune s podanim statusom.", summary = "Račun s statusom")
     @APIResponses({
             @APIResponse(responseCode = "200",
-                    description = "Vrjneni racuni",
+                    description = "Vrjneni računi",
                     content = @Content(schema = @Schema(implementation = purchasedTicketsDto.class, type = SchemaType.OBJECT))
             ),
             @APIResponse(responseCode = "404",
-                    description =  "Ni bil najden noben racun s tem statusom."
+                    description =  "Ni bil najden noben račun s tem statusom."
             )
     })
     @Path("status/{st}")
@@ -169,6 +170,16 @@ public class ticketPurchaseResource {
         return Response.ok().entity(tmp).build();
     }
 
+
+    @Operation(description = "Izbriše račun s podanim IDjem.", summary = "Izbriše račun z IDjem")
+    @APIResponses({
+            @APIResponse(responseCode = "202",
+                    description = "Račun uspešno izbrisan"
+            ),
+            @APIResponse(responseCode = "404",
+                    description =  "Ni bil najden noben račun s tem IDjem."
+            )
+    })
     @DELETE
     @Path("{id}")
     public Response deleteTicket(@PathParam("id") String id) {

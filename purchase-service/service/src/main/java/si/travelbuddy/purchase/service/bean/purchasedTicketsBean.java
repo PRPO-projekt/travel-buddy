@@ -30,7 +30,7 @@ public class purchasedTicketsBean {
     }
 
     public List<PurchasedTickets> getPurchasedTicketsByUserId(UUID id){
-        return em.createNamedQuery("PurchasedTickets.findByTicket", PurchasedTickets.class).setParameter("suppliedId", id).getResultList();
+        return em.createNamedQuery("PurchasedTickets.findByUser", PurchasedTickets.class).setParameter("suppliedId", id).getResultList();
     }
 
     public List<PurchasedTickets> getPurchasedTicketsByStanjeRacuna(int id){
