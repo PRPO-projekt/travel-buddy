@@ -15,7 +15,7 @@ kumuluzee:
       period-s: 30
     checks:
       data-source-health-check:
-        jndi-name: jdbc/CustomersDS
+        jndi-name: jdbc/Tickets
       disk-space-health-check:
         threshold: 100000000
   datasources:
