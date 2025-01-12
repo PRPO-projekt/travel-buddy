@@ -4,7 +4,20 @@ kumuluzee:
   env: "dev"
   server:
     http:
-      port: 8080
+      port: 8093
+  health:
+    servlet:
+      mapping: /health
+      enabled: true
+    logs:
+      enabled: true
+      level: INFO
+      period-s: 30
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/CustomersDS
+      disk-space-health-check:
+        threshold: 100000000
   datasources:
     - name: TicketsDS
       jndi-name: jdbc/Tickets
