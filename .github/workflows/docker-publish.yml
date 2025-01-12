@@ -34,6 +34,16 @@ jobs:
           context: TimetableService
         - image: PRPO-projekt/routing-service
           context: routing-service
+        - image: PRPO-projekt/crowdsourcing-service
+          context: crowdsourcing-service
+        - image: PRPO-projekt/account-manager-service
+          context: account-manager
+        - image: PRPO-projekt/poi-service
+          context: poiService
+        - image: PRPO-projekt/user-manager-service
+          context: user-manager
+        - image: PRPO-projekt/ticket-search-service
+          context: ticket-search-service
 
     steps:
       - name: Checkout repository
@@ -73,7 +83,7 @@ jobs:
           file: ${{ matrix.context }}/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
-          platforms: linux/amd64, linux/arm64/v8
+          platforms: linux/amd64
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

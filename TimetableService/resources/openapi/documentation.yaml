@@ -204,11 +204,6 @@ paths:
     get:
       description: ""
       parameters:
-      - name: "depId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
       - name: "name"
         in: "query"
         required: false
@@ -229,7 +224,7 @@ paths:
         required: false
         schema:
           type: "integer"
-      - name: "id"
+      - name: "depId"
         in: "path"
         required: true
         schema:
@@ -240,7 +235,7 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/StopTimeDao"
+                $ref: "#/components/schemas/StopTime"
   /trips:
     get:
       description: "Retrieve all trips"
@@ -397,23 +392,22 @@ components:
           format: "int32"
         stopId:
           type: "string"
-    ResultRow:
+    StopTime:
       type: "object"
       properties:
-        fieldIndex:
-          type: "object"
+        tripId:
+          type: "string"
+        stopId:
+          type: "string"
+        arrivalTime:
+          type: "string"
+        departureTime:
+          type: "string"
       required:
-      - "fieldIndex"
-    StopTimeDao:
-      type: "object"
-      properties:
-        writeValues:
-          $ref: "#/components/schemas/Object"
-        _readValues:
-          $ref: "#/components/schemas/ResultRow"
-      required:
-      - "id"
-      - "writeValues"
+      - "tripId"
+      - "stopId"
+      - "arrivalTime"
+      - "departureTime"
     Trip:
       type: "object"
       properties:
